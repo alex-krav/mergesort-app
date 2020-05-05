@@ -1,8 +1,5 @@
 package com.alexoft.sorting;
 
-import static com.alexoft.sorting.ArrayUtils.CopyArray;
-import static com.alexoft.sorting.ArrayUtils.TopDownMerge;
-
 /**
  * Algorithm that recursively splits the list (called runs in this example) into sublists
  * until sublist size is 1, then merges those sublists to produce a sorted list.
@@ -17,7 +14,7 @@ public class TopDownImpl implements MergeSort {
         if (n == 0)
             return;
         int[] B = new int[n]; // array B[] is a work array
-        CopyArray(A, 0, n, B); // one time copy of A[] to B[]
+        CopyArray(A, B); // one time copy of A[] to B[]
         TopDownSplitMerge(B, 0, n, A); // sort data from B[] into A[]
     }
 

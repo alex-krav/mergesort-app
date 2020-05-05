@@ -3,9 +3,6 @@ package com.alexoft.sorting;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.alexoft.sorting.ArrayUtils.CopyArray;
-import static com.alexoft.sorting.ArrayUtils.TopDownMerge;
-
 /**
  * First, the input is searched for any naturally occurring runs (sorted sequences).
  * Then each subsequent pair of runs is merged until all the pairs are merged.
@@ -45,11 +42,11 @@ public class NaturalMergeSortImpl implements MergeSort {
                     runs.remove(i+1);
                 if (runs.size() == 2) break;
             }
-            CopyArray(B, A, n);
+            CopyArray(B, A);
         }
         // merge last two runs from array A[] into B[]
         TopDownMerge(A, runs.get(0), runs.get(1), n, B);
-        CopyArray(B, A, n); // finally copy of B[] to A[]
+        CopyArray(B, A); // finally copy of B[] to A[]
     }
 
     /**

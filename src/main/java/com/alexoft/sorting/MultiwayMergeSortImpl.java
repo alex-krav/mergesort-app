@@ -3,8 +3,6 @@ package com.alexoft.sorting;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.alexoft.sorting.ArrayUtils.CopyArray;
-
 /**
  *  Multiway merges are a specific type of sequence merge algorithms that specialize in
  *  taking in k sorted lists and merging them into a single sorted list.
