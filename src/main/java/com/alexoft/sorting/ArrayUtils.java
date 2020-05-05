@@ -27,6 +27,16 @@ public abstract class ArrayUtils {
     }
 
     /**
+     * Copies an array using fast native function
+     * @param A source array
+     * @param B destination array
+     */
+    public static void CopyArray(int[] A, int[] B) {
+        int length = A.length;
+        System.arraycopy(A, 0, B, 0, length);
+    }
+
+    /**
      * Left source half is A[ iBegin:iMiddle-1 ].
      * Right source half is A[ iMiddle:iEnd-1 ].
      * Result is B[ iBegin:iEnd-1 ].

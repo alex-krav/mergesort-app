@@ -14,13 +14,17 @@ public class NaturalMergeSortImpl implements MergeSort {
 
     @Override
     public void sort(int[] A) {
+        if (A == null)
+            throw new IllegalArgumentException("Null arrays not allowed");
         int n = A.length;
+        if (n == 0)
+            return;
         int[] B = new int[n]; // array B[] is a work array
         NaturalMergeSort(A, B, n);
     }
 
     /**
-     * Sort array using naturally occuring runs.
+     * Sort array using naturally occurring runs.
      * @param A source array
      * @param B work array
      * @param n source array length
@@ -37,7 +41,8 @@ public class NaturalMergeSortImpl implements MergeSort {
                         runs.get(Math.min((i+1),runs.size()-1)),
                         runs.get(Math.min((i+2),runs.size()-1)), B);
                 // remove middle index of two subsequent runs
-                if (i < runs.size()-1) runs.remove(i+1);
+                if (i < runs.size()-1 && runs.get(i+1) != n)
+                    runs.remove(i+1);
                 if (runs.size() == 2) break;
             }
             CopyArray(B, A, n);

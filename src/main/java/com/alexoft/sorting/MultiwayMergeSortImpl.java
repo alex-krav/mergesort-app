@@ -17,9 +17,13 @@ public class MultiwayMergeSortImpl implements MergeSort {
 
     @Override
     public void sort(int[] A) {
+        if (A == null)
+            throw new IllegalArgumentException("Null arrays not allowed");
         int n = A.length;
+        if (n == 0)
+            return;
         int[] B = new int[n]; // array B[] is a work array
-        CopyArray(A, B, n); // one time copy of A[] into B[]
+        CopyArray(A, B); // one time copy of A[] into B[]
         KwayMergeSort(A, B, 0, n-1);
     }
 
@@ -48,7 +52,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
             KwayMergeSort(A, B, runs.get(i), runs.get(++i));
         }
         KwayMerge(A, B, runs);
-        CopyArray(B, A,10); // finally copy array B into A
+        CopyArray(B, A); // finally copy array B into A
     }
 
     /**

@@ -11,7 +11,11 @@ public class TopDownImpl implements MergeSort {
 
     @Override
     public void sort(int[] A) {
+        if (A == null)
+            throw new IllegalArgumentException("Null arrays not allowed");
         int n = A.length;
+        if (n == 0)
+            return;
         int[] B = new int[n]; // array B[] is a work array
         CopyArray(A, 0, n, B); // one time copy of A[] to B[]
         TopDownSplitMerge(B, 0, n, A); // sort data from B[] into A[]
