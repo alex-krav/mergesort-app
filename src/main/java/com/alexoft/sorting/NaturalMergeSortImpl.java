@@ -17,12 +17,14 @@ public class NaturalMergeSortImpl implements MergeSort {
     public void sort(int[] A) {
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
+        log("Natural merge sort is starting...");
         int n = A.length;
         if (n == 0)
             return;
         int[] B = new int[n]; // array B[] is a work array
         NaturalMergeSort(A, B, n);
-        logger.log("Natural merge sort output", A);
+        algoStats.setArraySize(n);
+        log("Natural merge sort output", A);
     }
 
     /**
@@ -50,7 +52,7 @@ public class NaturalMergeSortImpl implements MergeSort {
                 if (runs.size() == 2) break;
             }
             CopyArray(B, A);
-            logger.log("Natural merge sort interim result", A);
+            log("Natural merge sort interim result", A);
             algoStats.addCopies();
         }
         // merge last two runs from array A[] into B[]
@@ -89,5 +91,17 @@ public class NaturalMergeSortImpl implements MergeSort {
     @Override
     public void setLogger(LoggingService logger) {
         this.logger = logger;
+    }
+
+    @Override
+    public void log(String message) {
+        if (null != logger)
+            logger.log(message);
+    }
+
+    @Override
+    public void log(String message, int[] numbers) {
+        if (null != logger)
+            logger.log(message, numbers);
     }
 }

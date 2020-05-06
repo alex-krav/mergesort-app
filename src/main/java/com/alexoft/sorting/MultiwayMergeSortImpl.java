@@ -10,23 +10,27 @@ import java.util.List;
  *  taking in k sorted lists and merging them into a single sorted list.
  */
 public class MultiwayMergeSortImpl implements MergeSort {
-    private AlgoStats algoStats = new AlgoStats("Multiway merge sort");
+    private AlgoStats algoStats;
     private LoggingService logger;
     // number of parts, source array will be split in
     // 2 by default, making it a BottomUp implementation
     // of normal, binary merge sort
     private int k = 2;
 
-    public MultiwayMergeSortImpl() {}
+    public MultiwayMergeSortImpl() {
+        algoStats = new AlgoStats(String.format("Multiway merge sort (k=%d)", k));
+    }
 
     public MultiwayMergeSortImpl(int k) {
         this.k = k;
+        algoStats = new AlgoStats(String.format("Multiway merge sort (k=%d)", k));
     }
 
     @Override
     public void sort(int[] A) {
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
+        log(String.format("Multiway merge sort (k=%d) is starting...", k));
         int n = A.length;
         if (n == 0)
             return;
@@ -34,7 +38,8 @@ public class MultiwayMergeSortImpl implements MergeSort {
         CopyArray(A, B); // one time copy of A[] into B[]
         KwayMergeSplit(A, B, 0, n-1);
         algoStats.addCopies();
-        logger.log("Multiway merge sort output", A);
+        algoStats.setArraySize(n);
+        log(String.format("Multiway merge sort (k=%d) output", k), A);
     }
 
     /**
@@ -63,7 +68,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
         }
         KwayMerge(A, B, runs);
         CopyArray(B, A); // finally copy array B into A
-        logger.log("Multiway merge sort interim result", A);
+        log(String.format("Multiway merge sort (k=%d) interim result", k), A);
         algoStats.addSplits();
         algoStats.addCopies();
     }
@@ -150,5 +155,17 @@ public class MultiwayMergeSortImpl implements MergeSort {
     @Override
     public void setLogger(LoggingService logger) {
         this.logger = logger;
+    }
+
+    @Override
+    public void log(String message) {
+        if (null != logger)
+            logger.log(message);
+    }
+
+    @Override
+    public void log(String message, int[] numbers) {
+        if (null != logger)
+            logger.log(message, numbers);
     }
 }

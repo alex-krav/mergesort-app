@@ -16,6 +16,12 @@ public interface LoggingService {
     void log(String message, int[] numbers);
 
     /**
+     * Logs single message
+     * @param message message string
+     */
+    void log(String message);
+
+    /**
      * Logs statistics of an algorithm, after
      * method had finished sorting of array
      * @param stats statistics object

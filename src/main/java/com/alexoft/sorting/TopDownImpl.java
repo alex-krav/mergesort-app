@@ -14,6 +14,7 @@ public class TopDownImpl implements MergeSort {
     public void sort(int[] A) {
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
+        log("Merge sort is starting...");
         int n = A.length;
         if (n == 0)
             return;
@@ -22,7 +23,7 @@ public class TopDownImpl implements MergeSort {
         TopDownSplitMerge(B, 0, n, A); // sort data from B[] into A[]
         algoStats.addCopies();
         algoStats.setArraySize(n);
-        logger.log("Merge sort output", A);
+        log("Merge sort output", A);
     }
 
     /**
@@ -45,7 +46,7 @@ public class TopDownImpl implements MergeSort {
         TopDownMerge(B, iBegin, iMiddle, iEnd, A);
         algoStats.addSplits();
         algoStats.addMerges();
-        logger.log("Merge sort interim result", A);
+        log("Merge sort interim result", A);
     }
 
     @Override
@@ -56,5 +57,17 @@ public class TopDownImpl implements MergeSort {
     @Override
     public void setLogger(LoggingService logger) {
         this.logger = logger;
+    }
+
+    @Override
+    public void log(String message) {
+        if (null != logger)
+            logger.log(message);
+    }
+
+    @Override
+    public void log(String message, int[] numbers) {
+        if (null != logger)
+            logger.log(message, numbers);
     }
 }

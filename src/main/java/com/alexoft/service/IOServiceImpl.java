@@ -35,6 +35,8 @@ public class IOServiceImpl implements IOService {
      */
     @Override
     public void writeFile(String fileName, int[] numbers) throws IOException {
+        if (null == fileName)
+            fileName = generateFilename();
         BufferedWriter outputWriter = new BufferedWriter(new FileWriter(fileName));
         int n = numbers.length;
 
@@ -55,9 +57,13 @@ public class IOServiceImpl implements IOService {
      */
     @Override
     public void writeFile(int[] numbers) throws IOException {
-        DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-        String fileName = String.format("output_%s.txt",
-                timeStampPattern.format(java.time.LocalDateTime.now()));
+        String fileName = generateFilename();
         writeFile(fileName, numbers);
+    }
+
+    private String generateFilename() {
+        DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        return String.format("output_%s.txt",
+                timeStampPattern.format(java.time.LocalDateTime.now()));
     }
 }

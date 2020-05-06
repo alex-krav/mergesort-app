@@ -13,9 +13,30 @@ public interface MergeSort {
      */
     void sort(int[] A);
 
+    /**
+     * Gets statistics object for algorithm
+     * @return AlgoStats object
+     */
     AlgoStats getStats();
 
+    /**
+     * Setter for looger
+     * @param logger LoggingService
+     */
     void setLogger(LoggingService logger);
+
+    /**
+     * Logs a message
+     * @param message message string
+     */
+    void log(String message);
+
+    /**
+     * Logs a message and array
+     * @param message message string
+     * @param numbers integer array
+     */
+    void log(String message, int[] numbers);
 
     /**
      * Copies an array using fast native function

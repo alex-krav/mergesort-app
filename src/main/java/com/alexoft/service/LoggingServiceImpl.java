@@ -20,7 +20,15 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
+    public void log(String message) {
+        log.write("");
+        log.write(message);
+        log.write("");
+    }
+
+    @Override
     public void log(AlgoStats stats) {
+        log.write("");
         log.write(String.format("%s statistics", stats.getAlgoName()));
         log.write(String.format("elements: %d", stats.getArraySize()));
         log.write(String.format("copies: %d", stats.getCopies()));
