@@ -1,5 +1,7 @@
 package com.alexoft.sorting;
 
+import com.alexoft.service.LoggingService;
+
 /**
  * Common interface for merge sort implementations
  */
@@ -10,6 +12,10 @@ public interface MergeSort {
      * @param A array of integers
      */
     void sort(int[] A);
+
+    AlgoStats getStats();
+
+    void setLogger(LoggingService logger);
 
     /**
      * Copies an array using fast native function

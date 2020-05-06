@@ -1,5 +1,7 @@
 package com.alexoft.sorting;
 
+import com.alexoft.service.LoggingService;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,10 +10,18 @@ import java.util.List;
  *  taking in k sorted lists and merging them into a single sorted list.
  */
 public class MultiwayMergeSortImpl implements MergeSort {
+    private AlgoStats algoStats = new AlgoStats("Multiway merge sort");
+    private LoggingService logger;
     // number of parts, source array will be split in
     // 2 by default, making it a BottomUp implementation
     // of normal, binary merge sort
     private int k = 2;
+
+    public MultiwayMergeSortImpl() {}
+
+    public MultiwayMergeSortImpl(int k) {
+        this.k = k;
+    }
 
     @Override
     public void sort(int[] A) {
@@ -22,7 +32,9 @@ public class MultiwayMergeSortImpl implements MergeSort {
             return;
         int[] B = new int[n]; // array B[] is a work array
         CopyArray(A, B); // one time copy of A[] into B[]
-        KwayMergeSort(A, B, 0, n-1);
+        KwayMergeSplit(A, B, 0, n-1);
+        algoStats.addCopies();
+        logger.log("Multiway merge sort output", A);
     }
 
     /**
@@ -41,16 +53,19 @@ public class MultiwayMergeSortImpl implements MergeSort {
      * @param low begin index (inclusive)
      * @param high end index (inclusive)
      */
-    private void KwayMergeSort(int[] A, int[] B, int low, int high) {
+    private void KwayMergeSplit(int[] A, int[] B, int low, int high) {
         int size = high - low + 1;
         if (size < 2) return;
         List<Integer> runs = getKsplitRunsIndices(low, high);
 
         for (int i = 0; i < runs.size() - 1; ++i) {
-            KwayMergeSort(A, B, runs.get(i), runs.get(++i));
+            KwayMergeSplit(A, B, runs.get(i), runs.get(++i));
         }
         KwayMerge(A, B, runs);
         CopyArray(B, A); // finally copy array B into A
+        logger.log("Multiway merge sort interim result", A);
+        algoStats.addSplits();
+        algoStats.addCopies();
     }
 
     /**
@@ -94,6 +109,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
         for (int i = left; i < end; ++i) {
             B[i] = getMinValue(A, runs);
         }
+        algoStats.addMerges();
     }
 
     /**
@@ -124,5 +140,15 @@ public class MultiwayMergeSortImpl implements MergeSort {
         runs.set(minId, runs.get(minId)+1);
 
         return min;
+    }
+
+    @Override
+    public AlgoStats getStats() {
+        return algoStats;
+    }
+
+    @Override
+    public void setLogger(LoggingService logger) {
+        this.logger = logger;
     }
 }

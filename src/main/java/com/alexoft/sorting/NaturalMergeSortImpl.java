@@ -1,5 +1,7 @@
 package com.alexoft.sorting;
 
+import com.alexoft.service.LoggingService;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import java.util.List;
  * Then each subsequent pair of runs is merged until all the pairs are merged.
  */
 public class NaturalMergeSortImpl implements MergeSort {
+    private AlgoStats algoStats = new AlgoStats("Natural merge sort");
+    private LoggingService logger;
 
     @Override
     public void sort(int[] A) {
@@ -18,6 +22,7 @@ public class NaturalMergeSortImpl implements MergeSort {
             return;
         int[] B = new int[n]; // array B[] is a work array
         NaturalMergeSort(A, B, n);
+        logger.log("Natural merge sort output", A);
     }
 
     /**
@@ -31,22 +36,29 @@ public class NaturalMergeSortImpl implements MergeSort {
 
         while(runs.size() > 2) { // merge all runs, but last two
             for (int i = 0; i < runs.size(); ++i) {
-                if (runs.get(i) != n)
+                if (runs.get(i) != n) {
                     // recursively merge both runs from array A[] into B[],
                     // get next indices or last index of list
                     TopDownMerge(A, runs.get(i),
-                        runs.get(Math.min((i+1),runs.size()-1)),
-                        runs.get(Math.min((i+2),runs.size()-1)), B);
+                            runs.get(Math.min((i+1),runs.size()-1)),
+                            runs.get(Math.min((i+2),runs.size()-1)), B);
+                    algoStats.addMerges();
+                }
                 // remove middle index of two subsequent runs
                 if (i < runs.size()-1 && runs.get(i+1) != n)
                     runs.remove(i+1);
                 if (runs.size() == 2) break;
             }
             CopyArray(B, A);
+            logger.log("Natural merge sort interim result", A);
+            algoStats.addCopies();
         }
         // merge last two runs from array A[] into B[]
         TopDownMerge(A, runs.get(0), runs.get(1), n, B);
         CopyArray(B, A); // finally copy of B[] to A[]
+        algoStats.addSplits();
+        algoStats.addMerges();
+        algoStats.addCopies();
     }
 
     /**
@@ -67,5 +79,15 @@ public class NaturalMergeSortImpl implements MergeSort {
             if (endId >= n || A[endId] < A[i]) queue.add(endId);
         }
         return queue;
+    }
+
+    @Override
+    public AlgoStats getStats() {
+        return algoStats;
+    }
+
+    @Override
+    public void setLogger(LoggingService logger) {
+        this.logger = logger;
     }
 }

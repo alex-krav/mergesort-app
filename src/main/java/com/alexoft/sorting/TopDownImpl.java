@@ -1,10 +1,14 @@
 package com.alexoft.sorting;
 
+import com.alexoft.service.LoggingService;
+
 /**
  * Algorithm that recursively splits the list (called runs in this example) into sublists
  * until sublist size is 1, then merges those sublists to produce a sorted list.
  */
 public class TopDownImpl implements MergeSort {
+    private AlgoStats algoStats = new AlgoStats("Merge sort");
+    private LoggingService logger;
 
     @Override
     public void sort(int[] A) {
@@ -16,6 +20,9 @@ public class TopDownImpl implements MergeSort {
         int[] B = new int[n]; // array B[] is a work array
         CopyArray(A, B); // one time copy of A[] to B[]
         TopDownSplitMerge(B, 0, n, A); // sort data from B[] into A[]
+        algoStats.addCopies();
+        algoStats.setArraySize(n);
+        logger.log("Merge sort output", A);
     }
 
     /**
@@ -36,5 +43,18 @@ public class TopDownImpl implements MergeSort {
         TopDownSplitMerge(A, iMiddle,    iEnd, B); // sort the right run
         // merge the resulting runs from array B[] into A[]
         TopDownMerge(B, iBegin, iMiddle, iEnd, A);
+        algoStats.addSplits();
+        algoStats.addMerges();
+        logger.log("Merge sort interim result", A);
+    }
+
+    @Override
+    public AlgoStats getStats() {
+        return algoStats;
+    }
+
+    @Override
+    public void setLogger(LoggingService logger) {
+        this.logger = logger;
     }
 }
