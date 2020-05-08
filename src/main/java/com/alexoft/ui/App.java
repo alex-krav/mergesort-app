@@ -249,6 +249,11 @@ class ActionPane extends JPanel {
         save.setFont(new Font(null, 0, 12));
         add(save, gbc);
         save.setEnabled(false);
+
+        sort.addActionListener(event -> {
+            new LogPane();
+            sort.setEnabled(false);
+        });
     }
 }
 
@@ -280,5 +285,36 @@ class OrderPane extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
         add(panel, gbc);
+    }
+}
+
+class LogPane extends JPanel {
+    public static void main(String[] args) {
+        new LogPane();
+    }
+
+    public LogPane() {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                    ex.printStackTrace();
+                }
+
+                JFrame frame = new JFrame("Output logs");
+                final JTextArea log = new JTextArea(20,50);
+                log.setWrapStyleWord(true);
+                log.setLineWrap(true);
+                log.setFont(new Font(null, 0, 14));
+                final JScrollPane scroll = new JScrollPane(log);
+
+                frame.add(scroll);
+                frame.pack();
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }
+        });
     }
 }
