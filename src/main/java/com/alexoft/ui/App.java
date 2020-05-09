@@ -17,7 +17,8 @@ public class App {
 
         c.setIoService(new IOServiceImpl());
         c.setGeneratorService(new GeneratorServiceImpl());
-        c.setLoggingService(new LoggingServiceImpl(v.getLogPane()));
+        LoggingServiceImpl loggingService = new LoggingServiceImpl(v.getLogPane());
+        c.setLoggingService(loggingService);
 
         SortingServiceImpl sortingService = new SortingServiceImpl();
         sortingService.add(new TopDownImpl());
@@ -25,6 +26,7 @@ public class App {
         sortingService.add(new MultiwayMergeSortImpl(2));
         sortingService.add(new MultiwayMergeSortImpl(3));
         sortingService.add(new MultiwayMergeSortImpl(4));
+        sortingService.setLogger(loggingService);
         c.setSortingService(sortingService);
     }
 }

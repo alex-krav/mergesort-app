@@ -1,12 +1,12 @@
 package com.alexoft.ui;
 
-import com.alexoft.service.GeneratorService;
-import com.alexoft.service.IOService;
-import com.alexoft.service.LoggingService;
-import com.alexoft.service.SortingService;
+import com.alexoft.service.*;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.alexoft.ui.Validator.trim;
 
@@ -17,6 +17,7 @@ public class Controller {
     private GeneratorService generatorService;
     private LoggingService loggingService;
     private SortingService sortingService;
+    private ExecutorService executor;
 
     public Controller(Model m, View v) {
         model = m;
@@ -28,8 +29,6 @@ public class Controller {
         view.getAscRadioButton().addActionListener(event -> setAscOrder());
         view.getDescRadioButton().addActionListener(event -> setDescOrder());
         view.getSortButton().addActionListener(event -> sort());
-        view.getCancelButton().addActionListener(event -> cancel());
-        view.getSaveButton().addActionListener(event -> save());
     }
 
     private void selectFile() {
@@ -62,30 +61,17 @@ public class Controller {
         int[] inputArray = getInputArray();
         if (null != inputArray) {
             view.openLogPane();
-            loggingService.log("Input array", inputArray);
-            // sort -> thread
-            // getOutputArray
-            // enableMenu(true);
+            executor = Executors.newSingleThreadExecutor();
+            Runnable task = new SortingTask(inputArray);
+            executor.execute(task);
         } else {
             enableMenu(true);
         }
     }
 
-    private void cancel() {
-        // interrupt sorting thread
-        // menu will be enabled in sort() method
-        enableMenu(true);
-    }
-
-    private void save() {
-        // filechooser -> filename -> write(filename, outputArray) -> thread
-    }
-
     private void enableMenu(boolean enabled) {
         view.enableTabs(enabled);
         view.getSortButton().setEnabled(enabled);
-        view.getCancelButton().setEnabled(!enabled);
-        view.getSaveButton().setEnabled(enabled);
         view.enableOrder(enabled);
     }
 
@@ -148,5 +134,23 @@ public class Controller {
 
     public void setLoggingService(LoggingService loggingService) {
         this.loggingService = loggingService;
+    }
+
+    class SortingTask implements Runnable {
+        private int[] data;
+
+        public SortingTask(int[] data) {
+            this.data = data;
+        }
+
+        @Override
+        public void run() {
+            try {
+                sortingService.process(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            enableMenu(true);
+        }
     }
 }

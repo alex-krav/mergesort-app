@@ -30,6 +30,7 @@ public class SortingServiceImpl implements SortingService {
         // log input data
         logger.log("input data", data);
 
+        statResults.clear();
         for (MergeSort sorter : sorters) {
             // copy data
             int n = data.length;
