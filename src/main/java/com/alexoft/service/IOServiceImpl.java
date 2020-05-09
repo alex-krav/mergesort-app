@@ -26,6 +26,15 @@ public class IOServiceImpl implements IOService {
         return array;
     }
 
+    @Override
+    public int[] readString(String str) {
+        Scanner s = new Scanner(str);
+        int[] array = new int[s.nextInt()];
+        for (int i = 0; i < array.length; i++)
+            array[i] = s.nextInt();
+        return array;
+    }
+
     /**
      * Writes integers array to file, first line is array length,
      * second line is space separated integer numbers

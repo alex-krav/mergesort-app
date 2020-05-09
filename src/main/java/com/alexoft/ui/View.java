@@ -1,5 +1,7 @@
 package com.alexoft.ui;
 
+import com.alexoft.service.Log;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -11,7 +13,8 @@ public class View {
     private static final Font textFont = new Font(null, Font.PLAIN, 14);
 
     private BoxPane boxPane;
-    private LogPane logPane;
+    private LogPane logPane = new LogPane(false);
+    private JFrame frame;
 
     public View() {
         try {
@@ -20,7 +23,7 @@ public class View {
             ex.printStackTrace();
         }
 
-        JFrame frame = new JFrame("Merge sort application");
+        frame = new JFrame("Merge sort application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(boxPane = new BoxPane());
         frame.setResizable(false);
@@ -69,9 +72,32 @@ public class View {
     }
 
     public void openLogPane() {
-        if (null == logPane)
-            logPane = new LogPane();
+        logPane.setVisible(true);
         logPane.getTextArea().setText("");
+    }
+
+    public String getInputText() {
+        return boxPane.getInputPane().getTextTab().getInputText().getText();
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public String getArraySize() {
+        return boxPane.getInputPane().getGeneratorTab().getSizeField().getText();
+    }
+
+    public String getMinValue() {
+        return boxPane.getInputPane().getGeneratorTab().getMinField().getText();
+    }
+
+    public String getMaxValue() {
+        return boxPane.getInputPane().getGeneratorTab().getMaxField().getText();
+    }
+
+    public LogPane getLogPane() {
+        return logPane;
     }
 
     private static class BoxPane extends JPanel {
@@ -400,17 +426,18 @@ public class View {
         }
     }
 
-    public static class LogPane extends JPanel {
+    public static class LogPane extends JPanel implements Log {
         private final JTextArea textArea;
+        private JFrame frame;
 
-        public LogPane() {
+        public LogPane(boolean visible) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
                 ex.printStackTrace();
             }
 
-            JFrame frame = new JFrame("Output logs");
+            frame = new JFrame("Output logs");
             textArea = new JTextArea(20, 50);
             textArea.setWrapStyleWord(true);
             textArea.setLineWrap(true);
@@ -420,12 +447,21 @@ public class View {
 
             frame.add(scroll);
             frame.pack();
-            frame.setVisible(true);
+            frame.setVisible(visible);
             frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }
 
         public JTextArea getTextArea() {
             return textArea;
+        }
+
+        public void setVisible(boolean visible) {
+            frame.setVisible(visible);
+        }
+
+        @Override
+        public void write(String message) {
+            textArea.append(message+"\n");
         }
     }
 }

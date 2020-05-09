@@ -1,5 +1,10 @@
 package com.alexoft.ui;
 
+import com.alexoft.service.GeneratorService;
+import com.alexoft.service.IOService;
+import com.alexoft.service.LoggingService;
+import com.alexoft.service.SortingService;
+
 import javax.swing.*;
 import java.io.File;
 
@@ -8,6 +13,10 @@ import static com.alexoft.ui.Validator.trim;
 public class Controller {
     private Model model;
     private View view;
+    private IOService ioService;
+    private GeneratorService generatorService;
+    private LoggingService loggingService;
+    private SortingService sortingService;
 
     public Controller(Model m, View v) {
         model = m;
@@ -47,30 +56,97 @@ public class Controller {
     }
 
     private void sort() {
-        model.debug();
         enableMenu(false);
-        view.openLogPane();
+        model.setActiveTab(view.getActiveTab());
 
-        // getInputArray(tab-> readString, readFile, generate)
-        // sort -> thread
-        // getOutputArray
-        // enableMenu(true);
+        int[] inputArray = getInputArray();
+        if (null != inputArray) {
+            view.openLogPane();
+            loggingService.log("Input array", inputArray);
+            // sort -> thread
+            // getOutputArray
+            // enableMenu(true);
+        } else {
+            enableMenu(true);
+        }
     }
 
     private void cancel() {
         // interrupt sorting thread
         // menu will be enabled in sort() method
+        enableMenu(true);
     }
 
     private void save() {
         // filechooser -> filename -> write(filename, outputArray) -> thread
     }
 
-    public void enableMenu(boolean enabled) {
+    private void enableMenu(boolean enabled) {
         view.enableTabs(enabled);
         view.getSortButton().setEnabled(enabled);
         view.getCancelButton().setEnabled(!enabled);
         view.getSaveButton().setEnabled(enabled);
         view.enableOrder(enabled);
+    }
+
+    private int[] getInputArray() {
+        int[] array = null;
+        if (model.getActiveTab() == Model.Tab.TEXT) {
+            model.setInputText(view.getInputText());
+            model.debug();
+            String inputText = model.getInputText();
+            if (inputText.isEmpty())
+                JOptionPane.showMessageDialog(view.getFrame(), "Empty input text!", "Error", JOptionPane.ERROR_MESSAGE);
+            else
+                try {
+                    array = ioService.readString(model.getInputText());
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(view.getFrame(), "Wrong input text!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+        } else if (model.getActiveTab() == Model.Tab.FILE) {
+            model.debug();
+            File inputFile = model.getInputFile();
+            if (null == inputFile)
+                JOptionPane.showMessageDialog(view.getFrame(), "File not selected!", "Error", JOptionPane.ERROR_MESSAGE);
+            else
+                try {
+                    array = ioService.readFile(model.getInputFile());
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(view.getFrame(), "Wrong input file!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+        } else {
+            try {
+                model.setArraySize(Integer.valueOf(view.getArraySize()));
+                if (view.getMinValue().isEmpty() && view.getMaxValue().isEmpty()) {
+                    model.setMinValue(null);
+                    model.setMaxValue(null);
+                } else {
+                    model.setMinValue(Integer.valueOf(view.getMinValue()));
+                    model.setMaxValue(Integer.valueOf(view.getMaxValue()));
+                }
+                model.debug();
+
+                array = generatorService.generate(model.getArraySize(), model.getMinValue(), model.getMaxValue());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(view.getFrame(), "Wrong numbers!\nSet only array size or\nsize with min and max values.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return array;
+    }
+
+    public void setIoService(IOService ioService) {
+        this.ioService = ioService;
+    }
+
+    public void setGeneratorService(GeneratorService generatorService) {
+        this.generatorService = generatorService;
+    }
+
+    public void setSortingService(SortingService sortingService) {
+        this.sortingService = sortingService;
+    }
+
+    public void setLoggingService(LoggingService loggingService) {
+        this.loggingService = loggingService;
     }
 }

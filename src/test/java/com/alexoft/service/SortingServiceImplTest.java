@@ -65,15 +65,17 @@ public class SortingServiceImplTest {
         // When
         sortingService.process(data);
         // Then
+        Mockito.verify(log, times(1)).write("input data");
         Mockito.verify(log, times(1)).write("Merge sort is starting...");
         Mockito.verify(log, times(1)).write("Natural merge sort is starting...");
         Mockito.verify(log, times(1)).write("Multiway merge sort (k=3) is starting...");
-        Mockito.verify(log, times(9)).write("");
+        Mockito.verify(log, times(11)).write("");
 
         Mockito.verify(log, times(5)).write("Merge sort interim result");
         Mockito.verify(log, times(3)).write("Natural merge sort interim result");
         Mockito.verify(log, times(4)).write("Multiway merge sort (k=3) interim result");
 
+        Mockito.verify(log, times(1)).write("[6 5 4 3 2 1]");
         Mockito.verify(log, times(1)).write("[6 4 5 3 2 1]");
         Mockito.verify(log, times(1)).write("[4 5 6 3 2 1]");
         Mockito.verify(log, times(1)).write("[6 4 5 3 1 2]");
@@ -100,6 +102,7 @@ public class SortingServiceImplTest {
         Mockito.verify(log, times(1)).write("merges: 5");
         Mockito.verify(log, times(1)).write("merges: 7");
         Mockito.verify(log, times(1)).write("merges: 4");
+        Mockito.verify(log, times(1)).write(String.format("output saved to %s", OUTPUT_FILE));
 
         mergeSort.sort(data);
         Mockito.verify(ioService).writeFile(OUTPUT_FILE, data);

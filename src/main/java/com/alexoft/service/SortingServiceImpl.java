@@ -27,6 +27,9 @@ public class SortingServiceImpl implements SortingService {
 
     @Override
     public void process(int[] data) throws IOException {
+        // log input data
+        logger.log("input data", data);
+
         for (MergeSort sorter : sorters) {
             // copy data
             int n = data.length;
@@ -36,6 +39,10 @@ public class SortingServiceImpl implements SortingService {
             apply(sorter, copy);
         }
 
+        // log output file name
+        logger.log(String.format("output saved to %s", outputFile));
+
+        // log stats for sorting methods
         for(AlgoStats stats : statResults)
             logger.log(stats);
     }

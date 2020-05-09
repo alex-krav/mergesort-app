@@ -49,7 +49,7 @@ public class GeneratorServiceImpl implements GeneratorService {
      * @return array of random integers
      */
     @Override
-    public int[] generate(int n) {
+    public int[] generate(Integer n) {
         int[] result = new int[n];
         for (int i = 0; i < n; ++i) {
             result[i] = getNext();
@@ -57,12 +57,19 @@ public class GeneratorServiceImpl implements GeneratorService {
         return result;
     }
 
+    @Override
+    public int[] generate(Integer n, Integer min, Integer max) {
+        this.min = min;
+        this.max = max;
+        return generate(n);
+    }
+
     /**
      * Generates random integer with or without min/max boundaries.
      * Method is concurrency safe to prevent threads for getting same number.
      * @return random int
      */
-    public synchronized int getNext() {
+    private synchronized int getNext() {
         if (min == null)
             return rand.nextInt();
         else
