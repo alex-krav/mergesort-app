@@ -12,6 +12,8 @@ import java.io.Writer;
  * as well as algorithms statistics
  */
 public class ConsoleLogger implements Logger {
+    public static int MAX_INTERIM_RESULTS = 50;
+
     private Writer console = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public void print(String text, int[] numbers) {
@@ -39,13 +41,27 @@ public class ConsoleLogger implements Logger {
      * @param numbers integers array
      */
     public void print(int[] numbers) {
+        int n = numbers.length;
         try {
             console.write("[ ");
-            for(int i = 0; i < numbers.length; ++i) {
-                console.write(numbers[i]+"");
-                if (i < numbers.length - 1)
-                    console.write(", ");
-            }
+            if (n > 10) {
+                for(int i = 0; i < 5; ++i) {
+                    console.write(numbers[i]+"");
+                    if (i < 4)
+                        console.write(", ");
+                }
+                console.write(" ... ");
+                for(int i = n-5; i < n; ++i) {
+                    console.write(numbers[i]+"");
+                    if (i < n - 1)
+                        console.write(", ");
+                }
+            } else
+                for(int i = 0; i < n; ++i) {
+                    console.write(numbers[i]+"");
+                    if (i < n - 1)
+                        console.write(", ");
+                }
             console.write(" ]\n");
             console.flush();
         } catch (IOException e) {

@@ -26,6 +26,10 @@ public class App {
         sortingService.add(new MultiwayMergeSortImpl(2));
         sortingService.add(new MultiwayMergeSortImpl(3));
         sortingService.add(new MultiwayMergeSortImpl(4));
+        sortingService.add(new MultiwayMergeSortImpl(5));
+        sortingService.add(new MultiwayMergeSortImpl(6));
+        sortingService.add(new MultiwayMergeSortImpl(7));
+        sortingService.add(new MultiwayMergeSortImpl(8));
 
         sortingService.setConsoleLog(new ConsoleLogger());
         sortingService.setFileLog(new FileLogger());

@@ -5,6 +5,8 @@ import com.alexoft.log.Logger;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.alexoft.log.ConsoleLogger.MAX_INTERIM_RESULTS;
+
 /**
  *  Multiway merges are a specific type of sequence merge algorithms that specialize in
  *  taking in k sorted lists and merging them into a single sorted list.
@@ -17,6 +19,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
     // of normal, binary merge sort
     private int k = 2;
     private boolean asc = true;
+    private int logCounter, displayedCounter, divider;
 
     public MultiwayMergeSortImpl() {}
 
@@ -33,12 +36,19 @@ public class MultiwayMergeSortImpl implements MergeSort {
         int n = A.length;
         if (n == 0)
             return;
+        initInterimResultCounters(n);
         int[] B = new int[n]; // array B[] is a work array
         CopyArray(A, B); // one time copy of A[] into B[]
         KwayMergeSplit(A, B, 0, n-1);
         algoStats.addCopies();
         algoStats.setArraySize(n);
         log(String.format("Multiway merge sort (k=%d) output", k), A);
+    }
+
+    private void initInterimResultCounters(int length) {
+        logCounter = displayedCounter = 0;
+        divider = length / MAX_INTERIM_RESULTS;
+        if (divider == 0) divider = 1;
     }
 
     /**
@@ -67,7 +77,10 @@ public class MultiwayMergeSortImpl implements MergeSort {
         }
         KwayMerge(A, B, runs);
         CopyArray(B, A); // finally copy array B into A
-        log(String.format("Multiway merge sort (k=%d) interim result", k), A);
+        if (++logCounter % divider == 0) {
+            ++displayedCounter;
+            log(String.format("Multiway merge sort (k=%d) interim result %d (%d)", k, logCounter, displayedCounter), A);
+        }
         algoStats.addSplits();
         algoStats.addCopies();
     }

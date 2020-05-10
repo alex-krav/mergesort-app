@@ -2,6 +2,8 @@ package com.alexoft.algo;
 
 import com.alexoft.log.Logger;
 
+import static com.alexoft.log.ConsoleLogger.MAX_INTERIM_RESULTS;
+
 /**
  * Algorithm that recursively splits the list (called runs in this example) into sublists
  * until sublist size is 1, then merges those sublists to produce a sorted list.
@@ -10,6 +12,7 @@ public class TopDownImpl implements MergeSort {
     private AlgoStats algoStats;
     private Logger logger;
     private boolean asc = true;
+    private int logCounter, displayedCounter, divider;
 
     @Override
     public void sort(int[] A) {
@@ -20,12 +23,19 @@ public class TopDownImpl implements MergeSort {
         int n = A.length;
         if (n == 0)
             return;
+        initInterimResultCounters(n);
         int[] B = new int[n]; // array B[] is a work array
         CopyArray(A, B); // one time copy of A[] to B[]
         TopDownSplitMerge(B, 0, n, A); // sort data from B[] into A[]
         algoStats.addCopies();
         algoStats.setArraySize(n);
         log("Merge sort output", A);
+    }
+
+    private void initInterimResultCounters(int length) {
+        logCounter = displayedCounter = 0;
+        divider = length / MAX_INTERIM_RESULTS;
+        if (divider == 0) divider = 1;
     }
 
     /**
@@ -48,7 +58,10 @@ public class TopDownImpl implements MergeSort {
         TopDownMerge(B, iBegin, iMiddle, iEnd, A);
         algoStats.addSplits();
         algoStats.addMerges();
-        log("Merge sort interim result", A);
+        if (++logCounter % divider == 0) {
+            ++displayedCounter;
+            log(String.format("Merge sort interim result %d (%d)", logCounter, displayedCounter), A);
+        }
     }
 
     @Override
