@@ -43,12 +43,6 @@ public class View {
     public JButton getSortButton() {
         return boxPane.getActionPane().getSortButton();
     }
-    public JButton getCancelButton() {
-        return boxPane.getActionPane().getCancelButton();
-    }
-    public JButton getSaveButton() {
-        return boxPane.getActionPane().getSaveButton();
-    }
 
     public Enum<Model.Tab> getActiveTab() {
         return boxPane.getInputPane().getSelectedTab();
@@ -330,7 +324,7 @@ public class View {
     }
 
     private static class ActionPane extends JPanel {
-        private JButton sort, cancel, save;
+        private JButton sort;
         private OrderPane orderPane;
 
         public ActionPane() {
@@ -343,34 +337,17 @@ public class View {
             gbc.weightx = 1;
             gbc.weighty = 0.25;
             gbc.insets = new Insets(4, 4, 4, 4);
+            gbc.anchor = GridBagConstraints.NORTH;
             add((orderPane = new OrderPane()), gbc);
 
             gbc.gridy++;
             sort = new JButton("Sort");
             sort.setFont(labelFont);
             add(sort, gbc);
-            gbc.gridy++;
-            cancel = new JButton("Cancel");
-            cancel.setFont(labelFont);
-            add(cancel, gbc);
-            cancel.setEnabled(false);
-            gbc.gridy++;
-            save = new JButton("Save");
-            save.setFont(labelFont);
-            add(save, gbc);
-            save.setEnabled(false);
         }
 
         public JButton getSortButton() {
             return sort;
-        }
-
-        public JButton getCancelButton() {
-            return cancel;
-        }
-
-        public JButton getSaveButton() {
-            return save;
         }
 
         public OrderPane getOrderPane() {
