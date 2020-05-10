@@ -1,6 +1,8 @@
 package com.alexoft.ui;
 
-import com.alexoft.service.*;
+import com.alexoft.parser.Parser;
+import com.alexoft.random.IntGenerator;
+import com.alexoft.sorting.*;
 
 import javax.swing.*;
 import java.io.File;
@@ -13,10 +15,9 @@ import static com.alexoft.ui.Validator.trim;
 public class Controller {
     private Model model;
     private View view;
-    private IOService ioService;
-    private GeneratorService generatorService;
-    private LoggingService loggingService;
-    private SortingService sortingService;
+    private Parser parser;
+    private IntGenerator intGenerator;
+    private Sorting sorting;
     private ExecutorService executor;
 
     public Controller(Model m, View v) {
@@ -85,7 +86,7 @@ public class Controller {
                 JOptionPane.showMessageDialog(view.getFrame(), "Empty input text!", "Error", JOptionPane.ERROR_MESSAGE);
             else
                 try {
-                    array = ioService.readString(model.getInputText());
+                    array = parser.readString(model.getInputText());
                 } catch(Exception e) {
                     JOptionPane.showMessageDialog(view.getFrame(), "Wrong input text!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -96,7 +97,7 @@ public class Controller {
                 JOptionPane.showMessageDialog(view.getFrame(), "File not selected!", "Error", JOptionPane.ERROR_MESSAGE);
             else
                 try {
-                    array = ioService.readFile(model.getInputFile());
+                    array = parser.readFile(model.getInputFile());
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(view.getFrame(), "Wrong input file!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -112,7 +113,7 @@ public class Controller {
                 }
                 model.debug();
 
-                array = generatorService.generate(model.getArraySize(), model.getMinValue(), model.getMaxValue());
+                array = intGenerator.generate(model.getArraySize(), model.getMinValue(), model.getMaxValue());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(view.getFrame(), "Wrong numbers!\nSet only array size or\nsize with min and max values.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -120,20 +121,16 @@ public class Controller {
         return array;
     }
 
-    public void setIoService(IOService ioService) {
-        this.ioService = ioService;
+    public void setParser(Parser parser) {
+        this.parser = parser;
     }
 
-    public void setGeneratorService(GeneratorService generatorService) {
-        this.generatorService = generatorService;
+    public void setIntGenerator(IntGenerator intGenerator) {
+        this.intGenerator = intGenerator;
     }
 
-    public void setSortingService(SortingService sortingService) {
-        this.sortingService = sortingService;
-    }
-
-    public void setLoggingService(LoggingService loggingService) {
-        this.loggingService = loggingService;
+    public void setSorting(Sorting sorting) {
+        this.sorting = sorting;
     }
 
     class SortingTask implements Runnable {
@@ -146,7 +143,7 @@ public class Controller {
         @Override
         public void run() {
             try {
-                sortingService.process(data);
+                sorting.process(data);
             } catch (IOException e) {
                 e.printStackTrace();
             }

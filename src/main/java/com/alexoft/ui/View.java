@@ -1,12 +1,9 @@
 package com.alexoft.ui;
 
-import com.alexoft.service.Log;
-
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 
@@ -428,7 +425,7 @@ public class View {
         }
     }
 
-    public static class LogPane extends JPanel implements Log {
+    public static class LogPane extends JPanel {
         private final JTextArea textArea;
         private JFrame frame;
 
@@ -445,8 +442,8 @@ public class View {
             textArea.setLineWrap(true);
             textArea.setEditable(false);
             textArea.setFont(textFont);
-            //DefaultCaret caret = (DefaultCaret) textArea.getCaret();
-            //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+            DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
             final JScrollPane scroll = new JScrollPane(textArea);
 
             frame.add(scroll);
@@ -461,25 +458,6 @@ public class View {
 
         public void setVisible(boolean visible) {
             frame.setVisible(visible);
-        }
-
-        @Override
-        public synchronized void write(String text) {
-            Runnable  runnable = new Runnable() {
-                public void run() {
-                    textArea.append(text);
-                    textArea.append("\n");
-                    if (textArea.getDocument().getLength() > 50000) {
-                        try {
-                            textArea.getDocument().remove(0, 5000);
-                        } catch (BadLocationException e) {
-                            System.out.println("Can't clean log: " + e.getMessage());
-                        }
-                    }
-                    textArea.setCaretPosition(textArea.getDocument().getLength());
-                }
-            };
-            SwingUtilities.invokeLater(runnable);
         }
     }
 }

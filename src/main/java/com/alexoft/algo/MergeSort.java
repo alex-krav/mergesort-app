@@ -1,6 +1,6 @@
-package com.alexoft.sorting;
+package com.alexoft.algo;
 
-import com.alexoft.service.LoggingService;
+import com.alexoft.log.Logger;
 
 /**
  * Common interface for merge sort implementations
@@ -23,7 +23,7 @@ public interface MergeSort {
      * Setter for looger
      * @param logger LoggingService
      */
-    void setLogger(LoggingService logger);
+    void setLogger(Logger logger);
 
     /**
      * Logs a message

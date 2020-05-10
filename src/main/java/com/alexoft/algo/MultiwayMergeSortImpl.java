@@ -1,6 +1,6 @@
-package com.alexoft.sorting;
+package com.alexoft.algo;
 
-import com.alexoft.service.LoggingService;
+import com.alexoft.log.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class MultiwayMergeSortImpl implements MergeSort {
     private AlgoStats algoStats;
-    private LoggingService logger;
+    private Logger logger;
     // number of parts, source array will be split in
     // 2 by default, making it a BottomUp implementation
     // of normal, binary merge sort
@@ -153,19 +153,19 @@ public class MultiwayMergeSortImpl implements MergeSort {
     }
 
     @Override
-    public void setLogger(LoggingService logger) {
+    public void setLogger(Logger logger) {
         this.logger = logger;
     }
 
     @Override
     public void log(String message) {
         if (null != logger)
-            logger.log(message);
+            logger.print(message);
     }
 
     @Override
     public void log(String message, int[] numbers) {
         if (null != logger)
-            logger.log(message, numbers);
+            logger.print(message, numbers);
     }
 }

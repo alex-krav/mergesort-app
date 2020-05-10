@@ -1,11 +1,11 @@
-package com.alexoft.service;
+package com.alexoft.random;
 
 import java.util.Random;
 
 /**
  * Random number generator class, that uses java.util.Random under the hood
  */
-public class GeneratorServiceImpl implements GeneratorService {
+public class IntGeneratorImpl implements IntGenerator {
 
     private Random rand;
     private Integer min;
@@ -14,7 +14,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     /**
      * Default constructor
      */
-    public GeneratorServiceImpl() {
+    public IntGeneratorImpl() {
         this.rand = new Random(System.nanoTime());
     }
 
@@ -23,7 +23,7 @@ public class GeneratorServiceImpl implements GeneratorService {
      * @param min minimal number (inclusive)
      * @param max maximum number (inclusive)
      */
-    public GeneratorServiceImpl(int min, int max) {
+    public IntGeneratorImpl(int min, int max) {
         this.rand = new Random(System.nanoTime());
         this.min = min;
         this.max = max;
@@ -36,7 +36,7 @@ public class GeneratorServiceImpl implements GeneratorService {
      * @param min minimal number (inclusive)
      * @param max maximum number (inclusive)
      */
-    public GeneratorServiceImpl(long seed, int min, int max) {
+    public IntGeneratorImpl(long seed, int min, int max) {
         this.rand = new Random(seed);
         this.min = min;
         this.max = max;

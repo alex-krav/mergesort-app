@@ -1,20 +1,20 @@
-package com.alexoft.sorting;
+package com.alexoft.algo;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 /**
- * Test class for TopDownImpl.java
+ * Test class for MultiwayMergeSortImpl.java
  */
-public class TopDownImplTest {
+public class MultiwayMergeSortImplTest {
 
-    private MergeSort mergeSort;
+    private MultiwayMergeSortImpl mergeSort;
 
     @Before
     public void setup() {
-        mergeSort = new TopDownImpl();
+        mergeSort = new MultiwayMergeSortImpl();
     }
 
     @Test(expected = IllegalArgumentException.class)

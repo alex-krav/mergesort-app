@@ -1,4 +1,4 @@
-package com.alexoft.sorting;
+package com.alexoft.algo;
 
 /**
  * Accumulating object for gathering algorithm statistics

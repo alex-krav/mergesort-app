@@ -1,6 +1,6 @@
-package com.alexoft.sorting;
+package com.alexoft.algo;
 
-import com.alexoft.service.LoggingService;
+import com.alexoft.log.Logger;
 
 /**
  * Algorithm that recursively splits the list (called runs in this example) into sublists
@@ -8,7 +8,7 @@ import com.alexoft.service.LoggingService;
  */
 public class TopDownImpl implements MergeSort {
     private AlgoStats algoStats = new AlgoStats("Merge sort");
-    private LoggingService logger;
+    private Logger logger;
 
     @Override
     public void sort(int[] A) {
@@ -55,19 +55,19 @@ public class TopDownImpl implements MergeSort {
     }
 
     @Override
-    public void setLogger(LoggingService logger) {
+    public void setLogger(Logger logger) {
         this.logger = logger;
     }
 
     @Override
     public void log(String message) {
         if (null != logger)
-            logger.log(message);
+            logger.print(message);
     }
 
     @Override
     public void log(String message, int[] numbers) {
         if (null != logger)
-            logger.log(message, numbers);
+            logger.print(message, numbers);
     }
 }

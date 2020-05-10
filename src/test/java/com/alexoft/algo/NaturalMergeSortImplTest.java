@@ -1,4 +1,4 @@
-package com.alexoft.sorting;
+package com.alexoft.algo;
 
 import org.junit.Before;
 import org.junit.Test;

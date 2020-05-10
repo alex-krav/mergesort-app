@@ -1,7 +1,9 @@
-package com.alexoft.service;
+package com.alexoft.sorting;
 
-import com.alexoft.sorting.MergeSort;
-import com.alexoft.sorting.TopDownImpl;
+import com.alexoft.random.IntGenerator;
+import com.alexoft.random.IntGeneratorImpl;
+import com.alexoft.algo.MergeSort;
+import com.alexoft.algo.TopDownImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,9 +14,9 @@ import static org.junit.Assert.*;
 /**
  * Test class for GeneratorServiceImpl.java
  */
-public class GeneratorServiceImplTest {
+public class IntGeneratorImplTest {
 
-    private GeneratorService generator;
+    private IntGenerator generator;
     private MergeSort mergeSort;
 
     @Before
@@ -26,7 +28,7 @@ public class GeneratorServiceImplTest {
     public void generate() {
         // Given
         int number = 10;
-        generator = new GeneratorServiceImpl();
+        generator = new IntGeneratorImpl();
         // When
         int[] array1 = generator.generate(number);
         int[] array2 = generator.generate(number);
@@ -40,7 +42,7 @@ public class GeneratorServiceImplTest {
     public void generateMinMax() {
         // Given
         int number = 10, min = 1, max = 50;
-        generator = new GeneratorServiceImpl(min, max);
+        generator = new IntGeneratorImpl(min, max);
         // When
         int[] array1 = generator.generate(number);
         int[] array2 = generator.generate(number);

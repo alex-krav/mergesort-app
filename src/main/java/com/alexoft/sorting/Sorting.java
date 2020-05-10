@@ -1,6 +1,6 @@
-package com.alexoft.service;
+package com.alexoft.sorting;
 
-import com.alexoft.sorting.MergeSort;
+import com.alexoft.algo.MergeSort;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import java.io.IOException;
  * Class that combines all the processing of sorting array,
  * logging algorithm statistics and saving output to file.
  */
-public interface SortingService {
+public interface Sorting {
 
     /**
      * Adds a MergeSort implementation for later processing.

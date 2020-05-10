@@ -1,7 +1,7 @@
-package com.alexoft.sorting;
+package com.alexoft.algo;
 
-import com.alexoft.service.GeneratorService;
-import com.alexoft.service.GeneratorServiceImpl;
+import com.alexoft.random.IntGenerator;
+import com.alexoft.random.IntGeneratorImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,14 +16,14 @@ public class SortingCorrectnessTest {
     private TopDownImpl topDownMergeSort;
     private NaturalMergeSortImpl naturalMergeSort;
     private MultiwayMergeSortImpl multiwayMergeSort;
-    private GeneratorService generator;
+    private IntGenerator generator;
 
     @Before
     public void setUp() {
         topDownMergeSort = new TopDownImpl();
         naturalMergeSort = new NaturalMergeSortImpl();
         multiwayMergeSort = new MultiwayMergeSortImpl();
-        generator = new GeneratorServiceImpl();
+        generator = new IntGeneratorImpl();
     }
 
     /**

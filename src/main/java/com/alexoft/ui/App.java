@@ -1,12 +1,14 @@
 package com.alexoft.ui;
 
-import com.alexoft.service.GeneratorServiceImpl;
-import com.alexoft.service.IOServiceImpl;
-import com.alexoft.service.LoggingServiceImpl;
-import com.alexoft.service.SortingServiceImpl;
-import com.alexoft.sorting.MultiwayMergeSortImpl;
-import com.alexoft.sorting.NaturalMergeSortImpl;
-import com.alexoft.sorting.TopDownImpl;
+import com.alexoft.log.ConsoleLogger;
+import com.alexoft.log.FileLogger;
+import com.alexoft.random.IntGeneratorImpl;
+import com.alexoft.parser.ParserImpl;
+import com.alexoft.log.ScreenLogger;
+import com.alexoft.sorting.SortingImpl;
+import com.alexoft.algo.MultiwayMergeSortImpl;
+import com.alexoft.algo.NaturalMergeSortImpl;
+import com.alexoft.algo.TopDownImpl;
 
 public class App {
     public static void main(String[] args) {
@@ -15,18 +17,20 @@ public class App {
         Controller c = new Controller(m, v);
         c.initController();
 
-        c.setIoService(new IOServiceImpl());
-        c.setGeneratorService(new GeneratorServiceImpl());
-        LoggingServiceImpl loggingService = new LoggingServiceImpl(v.getLogPane());
-        c.setLoggingService(loggingService);
+        c.setParser(new ParserImpl());
+        c.setIntGenerator(new IntGeneratorImpl());
 
-        SortingServiceImpl sortingService = new SortingServiceImpl();
+        SortingImpl sortingService = new SortingImpl();
         sortingService.add(new TopDownImpl());
         sortingService.add(new NaturalMergeSortImpl());
         sortingService.add(new MultiwayMergeSortImpl(2));
         sortingService.add(new MultiwayMergeSortImpl(3));
         sortingService.add(new MultiwayMergeSortImpl(4));
-        sortingService.setLogger(loggingService);
-        c.setSortingService(sortingService);
+
+        sortingService.setConsoleLog(new ConsoleLogger());
+        sortingService.setFileLog(new FileLogger());
+        sortingService.setScreenLog(new ScreenLogger(v.getLogPane()));
+
+        c.setSorting(sortingService);
     }
 }
