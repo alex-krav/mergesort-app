@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static com.alexoft.ui.Validator.trim;
-
 public class Controller {
     private Model model;
     private View view;
@@ -127,6 +125,15 @@ public class Controller {
 
     public void setSorting(Sorting sorting) {
         this.sorting = sorting;
+    }
+
+    private static String trim(String name) {
+        int extId = name.lastIndexOf('.');
+        String ext = (extId > -1) ? name.substring(extId) : "";
+        if (name.length() > 30)
+            return name.substring(0, 30) + "... " + ext;
+        else
+            return name;
     }
 
     class SortingTask implements Runnable {
