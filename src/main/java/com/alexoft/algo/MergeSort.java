@@ -25,6 +25,10 @@ public interface MergeSort {
      */
     void setLogger(Logger logger);
 
+    void setAsc(boolean ascending);
+
+    boolean getAsc();
+
     /**
      * Logs a message
      * @param message message string
@@ -63,7 +67,7 @@ public interface MergeSort {
         // While there are elements in the left or right runs...
         for (int k = iBegin; k < iEnd; k++) {
             // If left run head exists and is <= existing right run head.
-            if (i < iMiddle && (j >= iEnd || A[i] <= A[j])) {
+            if (i < iMiddle && (j >= iEnd || (A[i] <= A[j] == getAsc()))) {
                 B[k] = A[i];
                 i = i + 1;
             } else {

@@ -4,7 +4,6 @@ import com.alexoft.algo.AlgoStats;
 import com.alexoft.algo.MergeSort;
 import com.alexoft.log.Logger;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class SortingImpl implements Sorting {
     }
 
     @Override
-    public void process(int[] data) {
+    public void process(int[] data, boolean asc) {
         statResults.clear();
         // log input data
         consoleLog.print("input array", data);
@@ -36,7 +35,7 @@ public class SortingImpl implements Sorting {
         for (MergeSort sorter : sorters) {
             System.arraycopy(data, 0, copy, 0, n);
             // apply sorting to array
-            apply(sorter, copy);
+            apply(sorter, copy, asc);
         }
 
         fileLog.print(copy);
@@ -50,10 +49,11 @@ public class SortingImpl implements Sorting {
     }
 
     @Override
-    public void apply(MergeSort sorter, int[] data) {
+    public void apply(MergeSort sorter, int[] data, boolean asc) {
 
         // sort & log interim and final results
         sorter.setLogger(consoleLog);
+        sorter.setAsc(asc);
         sorter.sort(data);
 
         // log stats

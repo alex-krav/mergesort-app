@@ -40,19 +40,16 @@ public class Controller {
             view.setFileName(trim(file.getName()));
             model.setInputFile(file);
         }
-        model.debug();
     }
 
     private void setAscOrder() {
         if (model.isAsc()) return;
         model.setAsc(true);
-        model.debug();
     }
 
     private void setDescOrder() {
         if (!model.isAsc()) return;
         model.setAsc(false);
-        model.debug();
     }
 
     private void sort() {
@@ -63,7 +60,7 @@ public class Controller {
         if (null != inputArray) {
             view.openLogPane();
             executor = Executors.newSingleThreadExecutor();
-            Runnable task = new SortingTask(inputArray);
+            Runnable task = new SortingTask(inputArray, model.isAsc());
             executor.execute(task);
         } else {
             enableMenu(true);
@@ -80,7 +77,6 @@ public class Controller {
         int[] array = null;
         if (model.getActiveTab() == Model.Tab.TEXT) {
             model.setInputText(view.getInputText());
-            model.debug();
             String inputText = model.getInputText();
             if (inputText.isEmpty())
                 JOptionPane.showMessageDialog(view.getFrame(), "Empty input text!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -91,7 +87,6 @@ public class Controller {
                     JOptionPane.showMessageDialog(view.getFrame(), "Wrong input text!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
         } else if (model.getActiveTab() == Model.Tab.FILE) {
-            model.debug();
             File inputFile = model.getInputFile();
             if (null == inputFile)
                 JOptionPane.showMessageDialog(view.getFrame(), "File not selected!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -104,18 +99,19 @@ public class Controller {
         } else {
             try {
                 model.setArraySize(Integer.valueOf(view.getArraySize()));
+                if (model.getArraySize() < 2) throw new IllegalArgumentException();
                 if (view.getMinValue().isEmpty() && view.getMaxValue().isEmpty()) {
                     model.setMinValue(null);
                     model.setMaxValue(null);
                 } else {
                     model.setMinValue(Integer.valueOf(view.getMinValue()));
                     model.setMaxValue(Integer.valueOf(view.getMaxValue()));
+                    if (model.getMinValue() > model.getMaxValue()) throw new IllegalArgumentException();
                 }
-                model.debug();
 
                 array = intGenerator.generate(model.getArraySize(), model.getMinValue(), model.getMaxValue());
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(view.getFrame(), "Wrong numbers!\nSet only array size or\nsize with min and max values.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view.getFrame(), "Wrong numbers!\nSet only array size (min 2) or\nsize with min and max values\n(min value < max value).", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         return array;
@@ -135,15 +131,17 @@ public class Controller {
 
     class SortingTask implements Runnable {
         private int[] data;
+        private boolean asc;
 
-        public SortingTask(int[] data) {
+        public SortingTask(int[] data, boolean asc) {
             this.data = data;
+            this.asc = asc;
         }
 
         @Override
         public void run() {
             try {
-                sorting.process(data);
+                sorting.process(data, asc);
             } catch (IOException e) {
                 e.printStackTrace();
             }

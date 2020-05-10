@@ -16,20 +16,19 @@ public class MultiwayMergeSortImpl implements MergeSort {
     // 2 by default, making it a BottomUp implementation
     // of normal, binary merge sort
     private int k = 2;
+    private boolean asc = true;
 
-    public MultiwayMergeSortImpl() {
-        algoStats = new AlgoStats(String.format("Multiway merge sort (k=%d)", k));
-    }
+    public MultiwayMergeSortImpl() {}
 
     public MultiwayMergeSortImpl(int k) {
         this.k = k;
-        algoStats = new AlgoStats(String.format("Multiway merge sort (k=%d)", k));
     }
 
     @Override
     public void sort(int[] A) {
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
+        algoStats = new AlgoStats(String.format("Multiway merge sort (k=%d)", k));
         log(String.format("Multiway merge sort (k=%d) is starting...", k));
         int n = A.length;
         if (n == 0)
@@ -112,7 +111,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
         int left = runs.get(0); // begin index of k lists (inclusive)
         int end = runs.get(runs.size()-1)+1; // end index of k lists (exclusive)
         for (int i = left; i < end; ++i) {
-            B[i] = getMinValue(A, runs);
+            B[i] = getValue(A, runs);
         }
         algoStats.addMerges();
     }
@@ -123,7 +122,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
      * @param runs list of k lists indices
      * @return min value from k lists
      */
-    private int getMinValue(int[] A, List<Integer> runs) {
+    private int getValue(int[] A, List<Integer> runs) {
         int minId = 0; // variables must be default initialized
         int min = 0;
         boolean first = true;
@@ -135,7 +134,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
             if (first) { // must get initial values for first iteration
                 minId = i; min = A[id]; first = false; continue;
             }
-            if (A[id] < min) { // if current value less than minimal value
+            if (A[id] < min == getAsc()) { // if current value less than minimal value
                 min = A[id];
                 minId = i;
             }
@@ -167,5 +166,15 @@ public class MultiwayMergeSortImpl implements MergeSort {
     public void log(String message, int[] numbers) {
         if (null != logger)
             logger.print(message, numbers);
+    }
+
+    @Override
+    public void setAsc(boolean asc) {
+        this.asc = asc;
+    }
+
+    @Override
+    public boolean getAsc() {
+        return asc;
     }
 }

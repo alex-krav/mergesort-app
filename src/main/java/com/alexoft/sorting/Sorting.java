@@ -22,7 +22,7 @@ public interface Sorting {
      * @param numbers integer array
      * @throws IOException if output file can't be created
      */
-    void process(int[] numbers) throws IOException;
+    void process(int[] numbers, boolean asc) throws IOException;
 
     /**
      * Sorts data array using selected sorting method. Meanwhile, interim
@@ -32,5 +32,5 @@ public interface Sorting {
      * @param data integer array
      * @throws IOException if output file can't be created
      */
-    void apply(MergeSort sorter, int[] data) throws IOException;
+    void apply(MergeSort sorter, int[] data, boolean asc) throws IOException;
 }

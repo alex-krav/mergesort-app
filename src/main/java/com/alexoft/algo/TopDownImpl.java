@@ -7,13 +7,15 @@ import com.alexoft.log.Logger;
  * until sublist size is 1, then merges those sublists to produce a sorted list.
  */
 public class TopDownImpl implements MergeSort {
-    private AlgoStats algoStats = new AlgoStats("Merge sort");
+    private AlgoStats algoStats;
     private Logger logger;
+    private boolean asc = true;
 
     @Override
     public void sort(int[] A) {
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
+        algoStats = new AlgoStats("Merge sort");
         log("Merge sort is starting...");
         int n = A.length;
         if (n == 0)
@@ -69,5 +71,15 @@ public class TopDownImpl implements MergeSort {
     public void log(String message, int[] numbers) {
         if (null != logger)
             logger.print(message, numbers);
+    }
+
+    @Override
+    public void setAsc(boolean asc) {
+        this.asc = asc;
+    }
+
+    @Override
+    public boolean getAsc() {
+        return asc;
     }
 }

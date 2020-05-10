@@ -413,7 +413,7 @@ public class View {
                 ex.printStackTrace();
             }
 
-            frame = new JFrame("Output logs");
+            frame = new JFrame("Output result and statistics");
             textArea = new JTextArea(20, 50);
             textArea.setWrapStyleWord(true);
             textArea.setLineWrap(true);
