@@ -46,7 +46,7 @@ public class SortingImpl implements Sorting {
         }
 
         // log output data
-        fileLog.print(copy);
+        fileLog.print("output", copy);
         screenLog.print("\noutput array", copy);
 
         // log stats for sorting methods

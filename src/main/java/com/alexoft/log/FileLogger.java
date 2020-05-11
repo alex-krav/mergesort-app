@@ -21,7 +21,7 @@ public class FileLogger implements Logger {
      * @param numbers integers array
      */
     public void print(int[] numbers) {
-        String fileName = generateFilename();
+        String fileName = generateDateTime();
         print(fileName, numbers);
     }
 
@@ -31,8 +31,8 @@ public class FileLogger implements Logger {
      * @param numbers integers array
      */
     public void print(String fileName, int[] numbers) {
-        if (null == fileName)
-            fileName = generateFilename();
+        fileName = generateFilename(fileName);
+
         try {
             BufferedWriter file = new BufferedWriter(new FileWriter(fileName));
             int n = numbers.length;
@@ -67,13 +67,20 @@ public class FileLogger implements Logger {
         throw new RuntimeException("Not implemented!");
     }
 
+    private String generateFilename(String fileName) {
+        if (null == fileName)
+            fileName = String.format("%s.txt", generateDateTime());
+        else
+            fileName = String.format("%s_%s.txt", fileName, generateDateTime());
+        return fileName;
+    }
+
     /**
      * Generates file name using datetime pattern, like output_2020-05-05_21-13-10.txt
      * @return file name string
      */
-    private String generateFilename() {
+    private String generateDateTime() {
         DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-        return String.format("output_%s.txt",
-                timeStampPattern.format(java.time.LocalDateTime.now()));
+        return timeStampPattern.format(java.time.LocalDateTime.now());
     }
 }

@@ -1,5 +1,6 @@
 package com.alexoft.ui;
 
+import com.alexoft.log.Logger;
 import com.alexoft.log.TerminalLogger;
 import com.alexoft.log.FileLogger;
 import com.alexoft.random.IntGeneratorImpl;
@@ -27,6 +28,8 @@ public class App {
 
         c.setParser(new ParserImpl());
         c.setIntGenerator(new IntGeneratorImpl());
+        Logger fileLogger = new FileLogger();
+        c.setFileLogger(fileLogger);
 
         SortingImpl sortingService = new SortingImpl();
         sortingService.add(new TopDownImpl());
@@ -40,7 +43,7 @@ public class App {
         sortingService.add(new MultiwayMergeSortImpl(8));
 
         sortingService.setConsoleLog(new TerminalLogger());
-        sortingService.setFileLog(new FileLogger());
+        sortingService.setFileLog(fileLogger);
         sortingService.setScreenLog(new ScreenLogger(v.getLogPane()));
 
         c.setSorting(sortingService);
