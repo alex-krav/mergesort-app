@@ -5,7 +5,11 @@ import com.alexoft.ui.View;
 
 import javax.swing.*;
 
+/**
+ * Implementation for logging to program logging panel.
+ */
 public class ScreenLogger implements Logger {
+    // logging panel (JPanel of Swing framework)
     private View.LogPane screen;
 
     public ScreenLogger(View.LogPane screen) {
@@ -49,10 +53,11 @@ public class ScreenLogger implements Logger {
         throw new RuntimeException("Not implemented!");
     }
 
-    public void setScreen(View.LogPane screen) {
-        this.screen = screen;
-    }
-
+    /**
+     * Swing framework events model accepts sending events
+     * to its Event queue
+     * @param runnable object with event data
+     */
     private void invoke(Runnable runnable) {
         SwingUtilities.invokeLater(runnable);
     }

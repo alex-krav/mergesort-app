@@ -7,6 +7,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 
+/**
+ * View class, that uses Swing framework capabilities
+ */
 public class View {
     private static final Font labelFont = new Font(null, Font.PLAIN, 12);
     private static final Font textFont = new Font(null, Font.PLAIN, 14);
@@ -93,6 +96,9 @@ public class View {
         return logPane;
     }
 
+    /**
+     * Enclosing panel that holds other UI elements
+     */
     private static class BoxPane extends JPanel {
         private InputPane inputPane;
         private ActionPane actionPane;
@@ -124,6 +130,9 @@ public class View {
         }
     }
 
+    /**
+     * Input panel with 3 input tabs: text, file, generator
+     */
     private static class InputPane extends JPanel {
         TextTab textTab;
         FileTab fileTab;
@@ -191,6 +200,9 @@ public class View {
         }
     }
 
+    /**
+     * Input tab for entering text data
+     */
     private static class TextTab extends JPanel {
         private JTextArea inputText;
 
@@ -212,6 +224,9 @@ public class View {
         }
     }
 
+    /**
+     * Input tab for entering input file
+     */
     private static class FileTab extends JPanel {
         private JButton select;
         private JLabel fileName;
@@ -240,6 +255,9 @@ public class View {
         }
     }
 
+    /**
+     * Input tab for generating random data
+     */
     private static class GeneratorTab extends JPanel {
         private JTextField size;
         private JTextField min;
@@ -323,6 +341,9 @@ public class View {
         }
     }
 
+    /**
+     * Action panel that has Order radiobutton and 'Sort' button
+     */
     private static class ActionPane extends JPanel {
         private JButton sort;
         private OrderPane orderPane;
@@ -355,6 +376,9 @@ public class View {
         }
     }
 
+    /**
+     * Panel with ascending / descending radiobutton
+     */
     private static class OrderPane extends JPanel {
 
         private JRadioButton asc;
@@ -402,6 +426,9 @@ public class View {
         }
     }
 
+    /**
+     * Output panel for displaying sorting results
+     */
     public static class LogPane extends JPanel {
         private final JTextArea textArea;
         private JFrame frame;

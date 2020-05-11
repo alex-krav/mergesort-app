@@ -2,7 +2,7 @@ package com.alexoft.algo;
 
 import com.alexoft.log.Logger;
 
-import static com.alexoft.log.ConsoleLogger.MAX_INTERIM_RESULTS;
+import static com.alexoft.log.TerminalLogger.MAX_INTERIM_RESULTS;
 
 /**
  * Algorithm that recursively splits the list (called runs in this example) into sublists
@@ -11,18 +11,20 @@ import static com.alexoft.log.ConsoleLogger.MAX_INTERIM_RESULTS;
 public class TopDownImpl implements MergeSort {
     private AlgoStats algoStats;
     private Logger logger;
+    // sorts in ascending order by default
     private boolean asc = true;
+    // variables for limiting number of logged interim arrays
     private int logCounter, displayedCounter, divider;
 
     @Override
     public void sort(int[] A) {
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
-        algoStats = new AlgoStats("Merge sort");
-        log("Merge sort is starting...");
         int n = A.length;
         if (n == 0)
             return;
+        log("Merge sort is starting...");
+        algoStats = new AlgoStats("Merge sort");
         initInterimResultCounters(n);
         int[] B = new int[n]; // array B[] is a work array
         CopyArray(A, B); // one time copy of A[] to B[]
@@ -32,6 +34,11 @@ public class TopDownImpl implements MergeSort {
         log("Merge sort output", A);
     }
 
+    /**
+     * Initializes variables for limiting number of logged interim arrays.
+     * Maximum 50 interim arrays will be displayed.
+     * @param length array length
+     */
     private void initInterimResultCounters(int length) {
         logCounter = displayedCounter = 0;
         divider = length / MAX_INTERIM_RESULTS;

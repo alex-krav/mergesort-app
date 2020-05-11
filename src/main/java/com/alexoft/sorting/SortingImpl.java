@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of SortingService interface
+ * Implementation of Sorting interface
  */
 public class SortingImpl implements Sorting {
 
@@ -23,6 +23,12 @@ public class SortingImpl implements Sorting {
         this.sorters.add(mergeSort);
     }
 
+    /**
+     * Method creates a copy of array before invoking new sort.
+     * Output array is saved to file.
+     * @param data integer array
+     * @param asc boolean flag (true - ascending order, false - descending order)
+     */
     @Override
     public void process(int[] data, boolean asc) {
         statResults.clear();
@@ -38,6 +44,7 @@ public class SortingImpl implements Sorting {
             apply(sorter, copy, asc);
         }
 
+        // log output data
         fileLog.print(copy);
         screenLog.print("output array", copy);
 
@@ -48,6 +55,12 @@ public class SortingImpl implements Sorting {
         }
     }
 
+    /**
+     * Method changes input array. Interim results and output array are logged.
+     * @param sorter MergeSort implementation object
+     * @param data integer array
+     * @param asc boolean flag (true - ascending order, false - descending order)
+     */
     @Override
     public void apply(MergeSort sorter, int[] data, boolean asc) {
 

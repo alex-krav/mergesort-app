@@ -25,8 +25,16 @@ public interface MergeSort {
      */
     void setLogger(Logger logger);
 
+    /**
+     * Sets order of sorting
+     * @param ascending boolean value, if false - sorts in descending order
+     */
     void setAsc(boolean ascending);
 
+    /**
+     * Gets an order of sorting
+     * @return true for ascending, false for descending
+     */
     boolean getAsc();
 
     /**

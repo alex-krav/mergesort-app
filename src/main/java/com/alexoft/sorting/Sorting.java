@@ -2,10 +2,8 @@ package com.alexoft.sorting;
 
 import com.alexoft.algo.MergeSort;
 
-import java.io.IOException;
-
 /**
- * Class that combines all the processing of sorting array,
+ * Interface that combines all the processing of sorting array,
  * logging algorithm statistics and saving output to file.
  */
 public interface Sorting {
@@ -18,19 +16,16 @@ public interface Sorting {
 
     /**
      * Iteratively applies sorting algorithms to an input array.
-     * Method creates a copy of array before invoking new sort.
      * @param numbers integer array
-     * @throws IOException if output file can't be created
+     * @param asc boolean flag (true - ascending order, false - descending order)
      */
-    void process(int[] numbers, boolean asc) throws IOException;
+    void process(int[] numbers, boolean asc);
 
     /**
-     * Sorts data array using selected sorting method. Meanwhile, interim
-     * results and output array are logged. Output array is saved to file.
-     * Method changes input array.
+     * Sorts data array using selected sorting method.
      * @param sorter MergeSort implementation object
      * @param data integer array
-     * @throws IOException if output file can't be created
+     * @param asc boolean flag (true - ascending order, false - descending order)
      */
-    void apply(MergeSort sorter, int[] data, boolean asc) throws IOException;
+    void apply(MergeSort sorter, int[] data, boolean asc);
 }

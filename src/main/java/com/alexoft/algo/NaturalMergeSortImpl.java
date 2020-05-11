@@ -12,17 +12,18 @@ import java.util.List;
 public class NaturalMergeSortImpl implements MergeSort {
     private AlgoStats algoStats;
     private Logger logger;
+    // sorts in ascending order by default
     private boolean asc = true;
 
     @Override
     public void sort(int[] A) {
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
-        algoStats = new AlgoStats("Natural merge sort");
-        log("Natural merge sort is starting...");
         int n = A.length;
         if (n == 0)
             return;
+        log("Natural merge sort is starting...");
+        algoStats = new AlgoStats("Natural merge sort");
         int[] B = new int[n]; // array B[] is a work array
         NaturalMergeSort(A, B, n);
         algoStats.setArraySize(n);

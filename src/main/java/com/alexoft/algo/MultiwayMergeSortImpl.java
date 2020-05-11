@@ -5,7 +5,7 @@ import com.alexoft.log.Logger;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.alexoft.log.ConsoleLogger.MAX_INTERIM_RESULTS;
+import static com.alexoft.log.TerminalLogger.MAX_INTERIM_RESULTS;
 
 /**
  *  Multiway merges are a specific type of sequence merge algorithms that specialize in
@@ -18,7 +18,9 @@ public class MultiwayMergeSortImpl implements MergeSort {
     // 2 by default, making it a BottomUp implementation
     // of normal, binary merge sort
     private int k = 2;
+    // sorts in ascending order by default
     private boolean asc = true;
+    // variables for limiting number of logged interim arrays
     private int logCounter, displayedCounter, divider;
 
     public MultiwayMergeSortImpl() {}
@@ -31,11 +33,11 @@ public class MultiwayMergeSortImpl implements MergeSort {
     public void sort(int[] A) {
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
-        algoStats = new AlgoStats(String.format("Multiway merge sort (k=%d)", k));
-        log(String.format("Multiway merge sort (k=%d) is starting...", k));
         int n = A.length;
         if (n == 0)
             return;
+        log(String.format("Multiway merge sort (k=%d) is starting...", k));
+        algoStats = new AlgoStats(String.format("Multiway merge sort (k=%d)", k));
         initInterimResultCounters(n);
         int[] B = new int[n]; // array B[] is a work array
         CopyArray(A, B); // one time copy of A[] into B[]
@@ -45,6 +47,11 @@ public class MultiwayMergeSortImpl implements MergeSort {
         log(String.format("Multiway merge sort (k=%d) output", k), A);
     }
 
+    /**
+     * Initializes variables for limiting number of logged interim arrays.
+     * Maximum 50 interim arrays will be displayed.
+     * @param length array length
+     */
     private void initInterimResultCounters(int length) {
         logCounter = displayedCounter = 0;
         divider = length / MAX_INTERIM_RESULTS;

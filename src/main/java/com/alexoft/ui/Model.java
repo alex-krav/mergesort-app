@@ -2,16 +2,19 @@ package com.alexoft.ui;
 
 import java.io.File;
 
+/**
+ * Model class for holding state of input data and parameters
+ */
 public class Model {
     public static final String EMPTY = "";
 
-    private Enum<Tab> activeTab = Tab.TEXT;
-    private String inputText = EMPTY;
-    private File inputFile = null;
-    private Integer arraySize = null;
-    private Integer minValue = null;
-    private Integer maxValue = null;
-    private boolean asc = true;
+    private Enum<Tab> activeTab = Tab.TEXT; // currently selected input tab
+    private String inputText = EMPTY; // input text with array
+    private File inputFile = null; // input file with array
+    private Integer arraySize = null; // size of random array
+    private Integer minValue = null; // minimal value of random array (inclusive)
+    private Integer maxValue = null; // maximum value of random array (inclusive)
+    private boolean asc = true; // true for ascending order, false for descending
 
     public Model() {}
 
@@ -86,6 +89,9 @@ public class Model {
         return (null != inputFile) ? inputFile.getName() : "null";
     }
 
+    /**
+     * Enum class for input tabs
+     */
     public enum Tab {
         TEXT,
         FILE,
