@@ -31,6 +31,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
 
     @Override
     public void sort(int[] A) {
+        long startTime = System.nanoTime();
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
         int n = A.length;
@@ -45,6 +46,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
         algoStats.addCopies();
         algoStats.setArraySize(n);
         log(String.format("Multiway merge sort (k=%d) output", k), A);
+        algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
     }
 
     /**

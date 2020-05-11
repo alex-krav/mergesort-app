@@ -18,6 +18,7 @@ public class TopDownImpl implements MergeSort {
 
     @Override
     public void sort(int[] A) {
+        long startTime = System.nanoTime();
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
         int n = A.length;
@@ -32,6 +33,7 @@ public class TopDownImpl implements MergeSort {
         algoStats.addCopies();
         algoStats.setArraySize(n);
         log("Merge sort output", A);
+        algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
     }
 
     /**

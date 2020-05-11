@@ -35,10 +35,12 @@ public class ScreenLogger implements Logger {
         invoke(() -> {
             textArea.append("\n");
             textArea.append(String.format("%s statistics\n", stats.getAlgoName()));
-            textArea.append(String.format("elements: %d\n", stats.getArraySize()));
             textArea.append(String.format("copies: %d\n", stats.getCopies()));
-            textArea.append(String.format("splits: %d\n", stats.getSplits()));
             textArea.append(String.format("merges: %d\n", stats.getMerges()));
+            if (stats.getTimeNanoSeconds()/1_000_000 == 0)
+                textArea.append(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
+            else
+                textArea.append(String.format("time: %d ms\n", stats.getTimeNanoSeconds()/1_000_000));
             // TODO: calc O notation from N elements ?
         });
     }

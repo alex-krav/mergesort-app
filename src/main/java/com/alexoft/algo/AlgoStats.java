@@ -10,6 +10,7 @@ public class AlgoStats {
     private int splits; // number of array splits
     private int merges; // number of array merges
     private int copies; // number of array copying
+    private long timeNanoSeconds;
 
     public AlgoStats(String algoName) {
         this.algoName = algoName;
@@ -49,5 +50,13 @@ public class AlgoStats {
 
     public int getCopies() {
         return copies;
+    }
+
+    public long getTimeNanoSeconds() {
+        return timeNanoSeconds;
+    }
+
+    public void setTimeNanoSeconds(long timeNanoSeconds) {
+        this.timeNanoSeconds = timeNanoSeconds;
     }
 }

@@ -17,6 +17,7 @@ public class NaturalMergeSortImpl implements MergeSort {
 
     @Override
     public void sort(int[] A) {
+        long startTime = System.nanoTime();
         if (A == null)
             throw new IllegalArgumentException("Null arrays not allowed");
         int n = A.length;
@@ -28,6 +29,7 @@ public class NaturalMergeSortImpl implements MergeSort {
         NaturalMergeSort(A, B, n);
         algoStats.setArraySize(n);
         log("Natural merge sort output", A);
+        algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
     }
 
     /**
