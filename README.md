@@ -1,5 +1,5 @@
-#Merge sort application
-##Idea
+# Merge sort application
+## Idea
 
 This is a demo application that allows to test 3 implementations of merge sort:
 - binary merge sort (top-down implementation)
@@ -9,25 +9,25 @@ This is a demo application that allows to test 3 implementations of merge sort:
 As input it accepts array of integers.<p>
 On output it shows sorted array in asc/desc order and statistics for each implementation, collecting number of splits, merges and array copies.
 
-##Building from sources
-###Prerequisites
+## Building from sources
+### Prerequisites
 Before building application you need the following software installed on your machine:
 1. Java 8 or higher
 2. Maven build tool
 
-###Building
+### Building
 Go to project directory and run command `mvn package` in terminal.<br>
 In `target` directory JAR file named `mergesort-app-1.0.0.jar` will be created.
 
-##Running
-###Prerequisites
+## Running
+### Prerequisites
 Before running application you need _Java 8_ installed on your machine.
 
-###Start
+### Start
 In terminal run command `java -jar target/mergesort-app-1.0.0.jar`. Graphical window will be opened.
 
-###Using
-####Input
+### Using
+#### Input
 In graphical window there is an _Input panel_ with 3 tabs:
 1. Text.<a name="input_text"></a><p>
     Consists of textarea. Example input:
@@ -52,7 +52,7 @@ You can select ascending or descending order in 'Order' panel.
 
 After specifying input click 'Sort' button.
 
-####Output
+#### Output
 Output will be available in 3 resources.
 1. Console. Will have all logs including input data, interim results, output array and statistics.<p>
 For performance goals, only first 5 and last 5 elements of array are printed.
