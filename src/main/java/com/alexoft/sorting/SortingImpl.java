@@ -34,6 +34,7 @@ public class SortingImpl implements Sorting {
         statResults.clear();
         // log input data
         consoleLog.print("input array", data);
+        screenLog.print("input array", data);
         // copy data
         int n = data.length;
         int[] copy = new int[n];
@@ -46,7 +47,7 @@ public class SortingImpl implements Sorting {
 
         // log output data
         fileLog.print(copy);
-        screenLog.print("output array", copy);
+        screenLog.print("\noutput array", copy);
 
         // log stats for sorting methods
         for(AlgoStats stats : statResults) {
