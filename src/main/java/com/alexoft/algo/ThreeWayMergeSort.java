@@ -14,7 +14,7 @@ public class ThreeWayMergeSort extends MergeSortBase {
         int n = gArray.length;
         if (n == 0)
             return;
-        log("3-way merge sort is starting...");
+        log(String.format("3-way merge sort is starting %s...", getAscString()));
         algoStats = new AlgoStats("3-way merge sort");
         initInterimResultCounters(n);
         int[] fArray = new int[n];

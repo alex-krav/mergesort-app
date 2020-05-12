@@ -27,7 +27,7 @@ public class MultiwayMergeSort extends MergeSortBase {
         int n = A.length;
         if (n == 0)
             return;
-        log(String.format("Multiway merge sort (k=%d) is starting...", k));
+        log(String.format("Multiway merge sort (k=%d) is starting %s...", k, getAscString()));
         algoStats = new AlgoStats(String.format("Multiway merge sort (k=%d)", k));
         initInterimResultCounters(n);
         int[] B = new int[n]; // array B[] is a work array

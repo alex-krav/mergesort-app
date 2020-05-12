@@ -14,7 +14,7 @@ public class FourWayMergeSort extends MergeSortBase {
         int n = gArray.length;
         if (n == 0)
             return;
-        log("4-way merge sort is starting...");
+        log(String.format("4-way merge sort is starting %s...", getAscString()));
         algoStats = new AlgoStats("4-way merge sort");
         initInterimResultCounters(n);
         int[] fArray = new int[n];
@@ -71,81 +71,88 @@ public class FourWayMergeSort extends MergeSortBase {
         int i1 = low, i2 = mid1, i3 = mid2, i4 = mid3, id = low;
         // choose smaller of the smallest in the four ranges
         while ((i1 < mid1) && (i2 < mid2) && (i3 < mid3) && (i4 < high)) {
-            if (gArray[i1] < gArray[i2] && gArray[i1] < gArray[i3] && gArray[i1] < gArray[i4])
+            if ((gArray[i1] < gArray[i2] == isAscending())
+                    && (gArray[i1] < gArray[i3] == isAscending())
+                    && (gArray[i1] < gArray[i4] == isAscending()))
                 destArray[id++] = gArray[i1++];
-            else if (gArray[i2] < gArray[i3] && gArray[i2] < gArray[i4])
+            else if ((gArray[i2] < gArray[i3] == isAscending())
+                    && (gArray[i2] < gArray[i4] == isAscending()))
                 destArray[id++] = gArray[i2++];
-            else if (gArray[i3] < gArray[i4])
+            else if (gArray[i3] < gArray[i4] == isAscending())
                 destArray[id++] = gArray[i3++];
             else
                 destArray[id++] = gArray[i4++];
         }
         // choose smaller in the three range
         while ((i1 < mid1) && (i2 < mid2) && (i3 < mid3)) {
-            if (gArray[i1] < gArray[i2] && gArray[i1] < gArray[i3])
+            if ((gArray[i1] < gArray[i2] == isAscending())
+                    && (gArray[i1] < gArray[i3] == isAscending()))
                 destArray[id++] = gArray[i1++];
-            else if (gArray[i2] < gArray[i3])
+            else if (gArray[i2] < gArray[i3] == isAscending())
                 destArray[id++] = gArray[i2++];
             else
                 destArray[id++] = gArray[i3++];
         }
         while ((i1 < mid1) && (i2 < mid2) && (i4 < high)) {
-            if (gArray[i1] < gArray[i2] && gArray[i1] < gArray[i4])
+            if ((gArray[i1] < gArray[i2] == isAscending())
+                    && (gArray[i1] < gArray[i4] == isAscending()))
                 destArray[id++] = gArray[i1++];
-            else if (gArray[i2] < gArray[i4])
+            else if (gArray[i2] < gArray[i4] == isAscending())
                 destArray[id++] = gArray[i2++];
             else
                 destArray[id++] = gArray[i4++];
         }
         while ((i2 < mid2) && (i3 < mid3) && (i4 < high)) {
-            if (gArray[i2] < gArray[i3] && gArray[i2] < gArray[i4])
+            if ((gArray[i2] < gArray[i3] == isAscending())
+                    && (gArray[i2] < gArray[i4] == isAscending()))
                 destArray[id++] = gArray[i2++];
-            else if (gArray[i3] < gArray[i4])
+            else if (gArray[i3] < gArray[i4] == isAscending())
                 destArray[id++] = gArray[i3++];
             else
                 destArray[id++] = gArray[i4++];
         }
         while ((i1 < mid1) && (i3 < mid3) && (i4 < high)) {
-            if (gArray[i1] < gArray[i3] && gArray[i1] < gArray[i4])
+            if ((gArray[i1] < gArray[i3] == isAscending())
+                    && (gArray[i1] < gArray[i4] == isAscending()))
                 destArray[id++] = gArray[i1++];
-            else if (gArray[i3] < gArray[i4])
+            else if (gArray[i3] < gArray[i4] == isAscending())
                 destArray[id++] = gArray[i3++];
             else
                 destArray[id++] = gArray[i4++];
         }
         // choose smaller in the two range
         while ((i1 < mid1) && (i2 < mid2)) {
-            if (gArray[i1] < gArray[i2])
+            if (gArray[i1] < gArray[i2] == isAscending())
                 destArray[id++] = gArray[i1++];
             else
                 destArray[id++] = gArray[i2++];
         }
         while ((i1 < mid1) && (i3 < mid3)) {
-            if (gArray[i1] < gArray[i3])
+            if (gArray[i1] < gArray[i3] == isAscending())
                 destArray[id++] = gArray[i1++];
             else
                 destArray[id++] = gArray[i3++];
         }
         while ((i1 < mid1) && (i4 < high)) {
-            if (gArray[i1] < gArray[i4])
+            if (gArray[i1] < gArray[i4] == isAscending())
                 destArray[id++] = gArray[i1++];
             else
                 destArray[id++] = gArray[i4++];
         }
         while ((i2 < mid2) && (i3 < mid3)) {
-            if (gArray[i2] < gArray[i3])
+            if (gArray[i2] < gArray[i3] == isAscending())
                 destArray[id++] = gArray[i2++];
             else
                 destArray[id++] = gArray[i3++];
         }
         while ((i2 < mid2) && (i4 < high)) {
-            if (gArray[i2] < gArray[i4])
+            if (gArray[i2] < gArray[i4] == isAscending())
                 destArray[id++] = gArray[i2++];
             else
                 destArray[id++] = gArray[i4++];
         }
         while ((i3 < mid3) && (i4 < high)) {
-            if (gArray[i3] < gArray[i4])
+            if (gArray[i3] < gArray[i4] == isAscending())
                 destArray[id++] = gArray[i3++];
             else
                 destArray[id++] = gArray[i4++];

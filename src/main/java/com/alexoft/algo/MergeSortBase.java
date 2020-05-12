@@ -88,4 +88,8 @@ public abstract class MergeSortBase implements MergeSort {
         if (null != logger)
             logger.print(message, numbers);
     }
+
+    protected String getAscString() {
+        return isAscending() ? "(ascending order)" : "(descending order)";
+    }
 }

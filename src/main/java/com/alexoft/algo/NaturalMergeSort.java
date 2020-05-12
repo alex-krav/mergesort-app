@@ -17,7 +17,7 @@ public class NaturalMergeSort extends MergeSortBase {
         int n = A.length;
         if (n == 0)
             return;
-        log("Natural merge sort is starting...");
+        log(String.format("Natural merge sort is starting %s...", getAscString()));
         algoStats = new AlgoStats("Natural merge sort");
         initInterimResultCounters(n);
         int[] B = new int[n]; // array B[] is a work array
