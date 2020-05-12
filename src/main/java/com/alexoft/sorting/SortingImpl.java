@@ -34,6 +34,7 @@ public class SortingImpl implements Sorting {
     public void process(int[] data, boolean asc) {
         statResults.clear();
         // log input data
+        fileLog.print("input", data);
         consoleLog.print("input array", data);
         screenLog.print("input array", data);
         // copy data

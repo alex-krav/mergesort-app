@@ -5,7 +5,6 @@ import com.alexoft.algo.NaturalMergeSort;
 import com.alexoft.algo.ThreeWayMergeSort;
 import com.alexoft.algo.BinaryMergeSort;
 import com.alexoft.log.FileLogger;
-import com.alexoft.log.Logger;
 import com.alexoft.log.ScreenLogger;
 import com.alexoft.log.TerminalLogger;
 import com.alexoft.parser.ParserImpl;
@@ -29,8 +28,6 @@ public class App {
 
         c.setParser(new ParserImpl());
         c.setIntGenerator(new IntGeneratorImpl());
-        Logger fileLogger = new FileLogger();
-        c.setFileLogger(fileLogger);
 
         SortingImpl sortingService = new SortingImpl();
         sortingService.add(new BinaryMergeSort());
@@ -39,7 +36,7 @@ public class App {
         sortingService.add(new FourWayMergeSort());
 
         sortingService.setConsoleLog(new TerminalLogger());
-        sortingService.setFileLog(fileLogger);
+        sortingService.setFileLog(new FileLogger());
         sortingService.setScreenLog(new ScreenLogger(v.getLogPane()));
 
         c.setSorting(sortingService);

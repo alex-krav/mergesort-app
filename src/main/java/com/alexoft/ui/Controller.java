@@ -1,6 +1,5 @@
 package com.alexoft.ui;
 
-import com.alexoft.log.Logger;
 import com.alexoft.parser.Parser;
 import com.alexoft.random.IntGenerator;
 import com.alexoft.sorting.Sorting;
@@ -20,7 +19,6 @@ public class Controller {
     private IntGenerator intGenerator;
     private Sorting sorting;
     private ExecutorService executor;
-    private Logger fileLogger;
 
     public Controller(Model m, View v) {
         model = m;
@@ -141,7 +139,6 @@ public class Controller {
                 }
 
                 array = intGenerator.generate(model.getArraySize(), model.getMinValue(), model.getMaxValue());
-                fileLogger.print("input", array);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(view.getFrame(), "Wrong numbers!\nSet only array size (min 2) or\nsize with min and max values\n(min value < max value).", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -174,10 +171,6 @@ public class Controller {
             return name.substring(0, 40) + "... " + ext;
         else
             return name;
-    }
-
-    public void setFileLogger(Logger fileLogger) {
-        this.fileLogger = fileLogger;
     }
 
     /**
