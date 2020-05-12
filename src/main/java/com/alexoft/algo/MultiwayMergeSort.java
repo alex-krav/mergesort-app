@@ -1,31 +1,21 @@
 package com.alexoft.algo;
 
-import com.alexoft.log.Logger;
-
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.alexoft.log.TerminalLogger.MAX_INTERIM_RESULTS;
 
 /**
  *  Multiway merges are a specific type of sequence merge algorithms that specialize in
  *  taking in k sorted lists and merging them into a single sorted list.
  */
-public class MultiwayMergeSortImpl implements MergeSort {
-    private AlgoStats algoStats;
-    private Logger logger;
+public class MultiwayMergeSort extends MergeSortBase {
     // number of parts, source array will be split in
     // 2 by default, making it a BottomUp implementation
     // of normal, binary merge sort
     private int k = 2;
-    // sorts in ascending order by default
-    private boolean asc = true;
-    // variables for limiting number of logged interim arrays
-    private int logCounter, displayedCounter, divider;
 
-    public MultiwayMergeSortImpl() {}
+    public MultiwayMergeSort() {}
 
-    public MultiwayMergeSortImpl(int k) {
+    public MultiwayMergeSort(int k) {
         this.k = k;
     }
 
@@ -42,22 +32,11 @@ public class MultiwayMergeSortImpl implements MergeSort {
         initInterimResultCounters(n);
         int[] B = new int[n]; // array B[] is a work array
         CopyArray(A, B); // one time copy of A[] into B[]
-        KwayMergeSplit(A, B, 0, n-1);
+        KwaySplit(A, B, 0, n-1);
         algoStats.addCopies();
         algoStats.setArraySize(n);
         log(String.format("Multiway merge sort (k=%d) output", k), A);
         algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
-    }
-
-    /**
-     * Initializes variables for limiting number of logged interim arrays.
-     * Maximum 50 interim arrays will be displayed.
-     * @param length array length
-     */
-    private void initInterimResultCounters(int length) {
-        logCounter = displayedCounter = 0;
-        divider = length / MAX_INTERIM_RESULTS;
-        if (divider == 0) divider = 1;
     }
 
     /**
@@ -76,20 +55,17 @@ public class MultiwayMergeSortImpl implements MergeSort {
      * @param low begin index (inclusive)
      * @param high end index (inclusive)
      */
-    private void KwayMergeSplit(int[] A, int[] B, int low, int high) {
+    private void KwaySplit(int[] A, int[] B, int low, int high) {
         int size = high - low + 1;
         if (size < 2) return;
         List<Integer> runs = getKsplitRunsIndices(low, high);
 
         for (int i = 0; i < runs.size() - 1; ++i) {
-            KwayMergeSplit(A, B, runs.get(i), runs.get(++i));
+            KwaySplit(A, B, runs.get(i), runs.get(++i));
         }
         KwayMerge(A, B, runs);
         CopyArray(B, A); // finally copy array B into A
-        if (++logCounter % divider == 0) {
-            ++displayedCounter;
-            log(String.format("Multiway merge sort (k=%d) interim result %d (%d)", k, logCounter, displayedCounter), A);
-        }
+        logInterim(String.format("Multiway merge sort (k=%d) interim result", k), A);
         algoStats.addSplits();
         algoStats.addCopies();
     }
@@ -156,7 +132,7 @@ public class MultiwayMergeSortImpl implements MergeSort {
             if (first) { // must get initial values for first iteration
                 minId = i; min = A[id]; first = false; continue;
             }
-            if (A[id] < min == getAsc()) { // if current value less than minimal value
+            if (A[id] < min == isAscending()) { // if current value less than minimal value
                 min = A[id];
                 minId = i;
             }
@@ -166,37 +142,5 @@ public class MultiwayMergeSortImpl implements MergeSort {
         runs.set(minId, runs.get(minId)+1);
 
         return min;
-    }
-
-    @Override
-    public AlgoStats getStats() {
-        return algoStats;
-    }
-
-    @Override
-    public void setLogger(Logger logger) {
-        this.logger = logger;
-    }
-
-    @Override
-    public void log(String message) {
-        if (null != logger)
-            logger.print(message);
-    }
-
-    @Override
-    public void log(String message, int[] numbers) {
-        if (null != logger)
-            logger.print(message, numbers);
-    }
-
-    @Override
-    public void setAsc(boolean asc) {
-        this.asc = asc;
-    }
-
-    @Override
-    public boolean getAsc() {
-        return asc;
     }
 }

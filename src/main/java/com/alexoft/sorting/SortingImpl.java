@@ -2,6 +2,7 @@ package com.alexoft.sorting;
 
 import com.alexoft.algo.AlgoStats;
 import com.alexoft.algo.MergeSort;
+import com.alexoft.algo.MergeSortBase;
 import com.alexoft.log.Logger;
 
 import java.util.ArrayList;
@@ -64,14 +65,14 @@ public class SortingImpl implements Sorting {
      */
     @Override
     public void apply(MergeSort sorter, int[] data, boolean asc) {
-
+        MergeSortBase baseSorter = (MergeSortBase) sorter;
         // sort & log interim and final results
-        sorter.setLogger(consoleLog);
-        sorter.setAsc(asc);
-        sorter.sort(data);
+        baseSorter.setLogger(consoleLog);
+        baseSorter.setAscending(asc);
+        baseSorter.sort(data);
 
         // log stats
-        statResults.add(sorter.getStats());
+        statResults.add(baseSorter.getStats());
     }
 
     public void setConsoleLog(Logger consoleLog) {

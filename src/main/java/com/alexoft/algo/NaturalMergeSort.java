@@ -1,7 +1,5 @@
 package com.alexoft.algo;
 
-import com.alexoft.log.Logger;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,11 +7,7 @@ import java.util.List;
  * First, the input is searched for any naturally occurring runs (sorted sequences).
  * Then each subsequent pair of runs is merged until all the pairs are merged.
  */
-public class NaturalMergeSortImpl implements MergeSort {
-    private AlgoStats algoStats;
-    private Logger logger;
-    // sorts in ascending order by default
-    private boolean asc = true;
+public class NaturalMergeSort extends MergeSortBase {
 
     @Override
     public void sort(int[] A) {
@@ -25,8 +19,9 @@ public class NaturalMergeSortImpl implements MergeSort {
             return;
         log("Natural merge sort is starting...");
         algoStats = new AlgoStats("Natural merge sort");
+        initInterimResultCounters(n);
         int[] B = new int[n]; // array B[] is a work array
-        NaturalMergeSort(A, B, n);
+        naturalSplit(A, B, n);
         algoStats.setArraySize(n);
         log("Natural merge sort output", A);
         algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
@@ -38,7 +33,7 @@ public class NaturalMergeSortImpl implements MergeSort {
      * @param B work array
      * @param n source array length
      */
-    private void NaturalMergeSort(int[] A, int[] B, int n) {
+    private void naturalSplit(int[] A, int[] B, int n) {
         List<Integer> runs = getSortedRunsIndices(A, n);
 
         while(runs.size() > 2) { // merge all runs, but last two
@@ -46,7 +41,7 @@ public class NaturalMergeSortImpl implements MergeSort {
                 if (runs.get(i) != n) {
                     // recursively merge both runs from array A[] into B[],
                     // get next indices or last index of list
-                    TopDownMerge(A, runs.get(i),
+                    binaryMerge(A, runs.get(i),
                             runs.get(Math.min((i+1),runs.size()-1)),
                             runs.get(Math.min((i+2),runs.size()-1)), B);
                     algoStats.addMerges();
@@ -57,11 +52,11 @@ public class NaturalMergeSortImpl implements MergeSort {
                 if (runs.size() == 2) break;
             }
             CopyArray(B, A);
-            log("Natural merge sort interim result", A);
+            logInterim("Natural merge sort interim result", A);
             algoStats.addCopies();
         }
         // merge last two runs from array A[] into B[]
-        TopDownMerge(A, runs.get(0), runs.get(1), n, B);
+        binaryMerge(A, runs.get(0), runs.get(1), n, B);
         CopyArray(B, A); // finally copy of B[] to A[]
         algoStats.addSplits();
         algoStats.addMerges();
@@ -83,40 +78,8 @@ public class NaturalMergeSortImpl implements MergeSort {
             int endId = i + 1;
             // if next element is less than current, or this is
             // the last element, add end index
-            if (endId >= n || (A[endId] < A[i] == getAsc())) queue.add(endId);
+            if (endId >= n || (A[endId] < A[i] == isAscending())) queue.add(endId);
         }
         return queue;
-    }
-
-    @Override
-    public AlgoStats getStats() {
-        return algoStats;
-    }
-
-    @Override
-    public void setLogger(Logger logger) {
-        this.logger = logger;
-    }
-
-    @Override
-    public void log(String message) {
-        if (null != logger)
-            logger.print(message);
-    }
-
-    @Override
-    public void log(String message, int[] numbers) {
-        if (null != logger)
-            logger.print(message, numbers);
-    }
-
-    @Override
-    public void setAsc(boolean asc) {
-        this.asc = asc;
-    }
-
-    @Override
-    public boolean getAsc() {
-        return asc;
     }
 }

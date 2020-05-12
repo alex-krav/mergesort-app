@@ -13,15 +13,15 @@ import static org.junit.Assert.assertArrayEquals;
  */
 public class SortingCorrectnessTest {
 
-    private TopDownImpl topDownMergeSort;
-    private NaturalMergeSortImpl naturalMergeSort;
+    private BinaryMergeSort topDownMergeSort;
+    private NaturalMergeSort naturalMergeSort;
     private ThreeWayMergeSort threeWayMergeSort;
     private IntGenerator generator;
 
     @Before
     public void setUp() {
-        topDownMergeSort = new TopDownImpl();
-        naturalMergeSort = new NaturalMergeSortImpl();
+        topDownMergeSort = new BinaryMergeSort();
+        naturalMergeSort = new NaturalMergeSort();
         threeWayMergeSort = new ThreeWayMergeSort();
         generator = new IntGeneratorImpl();
     }
@@ -41,9 +41,9 @@ public class SortingCorrectnessTest {
         int[] threeWayResult = new int[num]; System.arraycopy(data, 0, threeWayResult, 0, num);
 
         // When
-        topDownMergeSort.setAsc(asc); topDownMergeSort.sort(topDownResult);
-        naturalMergeSort.setAsc(asc); naturalMergeSort.sort(naturalResult);
-        threeWayMergeSort.setAsc(asc); threeWayMergeSort.sort(threeWayResult);
+        topDownMergeSort.setAscending(asc); topDownMergeSort.sort(topDownResult);
+        naturalMergeSort.setAscending(asc); naturalMergeSort.sort(naturalResult);
+        threeWayMergeSort.setAscending(asc); threeWayMergeSort.sort(threeWayResult);
 
         // Then
         assertArrayEquals(topDownResult, naturalResult);
@@ -60,9 +60,9 @@ public class SortingCorrectnessTest {
         int[] threeWayResult = new int[num]; System.arraycopy(data, 0, threeWayResult, 0, num);
 
         // When
-        topDownMergeSort.setAsc(asc); topDownMergeSort.sort(topDownResult);
-        naturalMergeSort.setAsc(asc); naturalMergeSort.sort(naturalResult);
-        threeWayMergeSort.setAsc(asc); threeWayMergeSort.sort(threeWayResult);
+        topDownMergeSort.setAscending(asc); topDownMergeSort.sort(topDownResult);
+        naturalMergeSort.setAscending(asc); naturalMergeSort.sort(naturalResult);
+        threeWayMergeSort.setAscending(asc); threeWayMergeSort.sort(threeWayResult);
 
         // Then
         assertArrayEquals(topDownResult, naturalResult);

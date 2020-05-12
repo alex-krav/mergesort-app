@@ -1,7 +1,5 @@
 package com.alexoft.algo;
 
-import com.alexoft.log.Logger;
-
 /**
  * Common interface for merge sort implementations
  */
@@ -14,41 +12,10 @@ public interface MergeSort {
     void sort(int[] A);
 
     /**
-     * Gets statistics object for algorithm
-     * @return AlgoStats object
-     */
-    AlgoStats getStats();
-
-    /**
-     * Setter for looger
-     * @param logger LoggingService
-     */
-    void setLogger(Logger logger);
-
-    /**
-     * Sets order of sorting
-     * @param ascending boolean value, if false - sorts in descending order
-     */
-    void setAsc(boolean ascending);
-
-    /**
      * Gets an order of sorting
      * @return true for ascending, false for descending
      */
-    boolean getAsc();
-
-    /**
-     * Logs a message
-     * @param message message string
-     */
-    void log(String message);
-
-    /**
-     * Logs a message and array
-     * @param message message string
-     * @param numbers integer array
-     */
-    void log(String message, int[] numbers);
+    boolean isAscending();
 
     /**
      * Copies an array using fast native function
@@ -70,12 +37,12 @@ public interface MergeSort {
      * @param iEnd end index (exclusive)
      * @param B result array
      */
-    default void TopDownMerge(int[] A, int iBegin, int iMiddle, int iEnd, int[] B) {
+    default void binaryMerge(int[] A, int iBegin, int iMiddle, int iEnd, int[] B) {
         int i = iBegin, j = iMiddle;
         // While there are elements in the left or right runs...
         for (int k = iBegin; k < iEnd; k++) {
             // If left run head exists and is <= existing right run head.
-            if (i < iMiddle && (j >= iEnd || (A[i] <= A[j] == getAsc()))) {
+            if (i < iMiddle && (j >= iEnd || (A[i] <= A[j] == isAscending()))) {
                 B[k] = A[i];
                 i = i + 1;
             } else {

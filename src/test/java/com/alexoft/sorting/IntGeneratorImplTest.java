@@ -3,7 +3,7 @@ package com.alexoft.sorting;
 import com.alexoft.random.IntGenerator;
 import com.alexoft.random.IntGeneratorImpl;
 import com.alexoft.algo.MergeSort;
-import com.alexoft.algo.TopDownImpl;
+import com.alexoft.algo.BinaryMergeSort;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ public class IntGeneratorImplTest {
 
     @Before
     public void setUp() {
-        mergeSort = new TopDownImpl();
+        mergeSort = new BinaryMergeSort();
     }
 
     @Test

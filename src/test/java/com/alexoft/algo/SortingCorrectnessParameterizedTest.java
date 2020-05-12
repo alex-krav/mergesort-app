@@ -19,9 +19,9 @@ import static org.junit.Assert.assertArrayEquals;
 @RunWith(Parameterized.class)
 public class SortingCorrectnessParameterizedTest {
 
-    private TopDownImpl topDownMergeSort;
-    private NaturalMergeSortImpl naturalMergeSort;
-    private MultiwayMergeSortImpl multiwayMergeSort;
+    private BinaryMergeSort topDownMergeSort;
+    private NaturalMergeSort naturalMergeSort;
+    private MultiwayMergeSort multiwayMergeSort;
     private IntGenerator generator;
     private int k;
     private boolean asc;
@@ -33,9 +33,9 @@ public class SortingCorrectnessParameterizedTest {
 
     @Before
     public void setUp() {
-        topDownMergeSort = new TopDownImpl();
-        naturalMergeSort = new NaturalMergeSortImpl();
-        multiwayMergeSort = new MultiwayMergeSortImpl();
+        topDownMergeSort = new BinaryMergeSort();
+        naturalMergeSort = new NaturalMergeSort();
+        multiwayMergeSort = new MultiwayMergeSort();
         generator = new IntGeneratorImpl();
     }
 
@@ -63,9 +63,9 @@ public class SortingCorrectnessParameterizedTest {
         int[] multiwayResult = new int[num]; System.arraycopy(data, 0, multiwayResult, 0, num);
 
         // When
-        topDownMergeSort.setAsc(asc); topDownMergeSort.sort(topDownResult);
-        naturalMergeSort.setAsc(asc); naturalMergeSort.sort(naturalResult);
-        multiwayMergeSort.setAsc(asc); multiwayMergeSort.setK(k); multiwayMergeSort.sort(multiwayResult);
+        topDownMergeSort.setAscending(asc); topDownMergeSort.sort(topDownResult);
+        naturalMergeSort.setAscending(asc); naturalMergeSort.sort(naturalResult);
+        multiwayMergeSort.setAscending(asc); multiwayMergeSort.setK(k); multiwayMergeSort.sort(multiwayResult);
 
         // Then
         assertArrayEquals(topDownResult, naturalResult);

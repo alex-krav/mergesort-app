@@ -8,13 +8,13 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * Test class for NaturalMergeSortImplTest.java
  */
-public class NaturalMergeSortImplTest {
+public class NaturalMergeSortTest {
 
     private MergeSort mergeSort;
 
     @Before
     public void setup() {
-        mergeSort = new NaturalMergeSortImpl();
+        mergeSort = new NaturalMergeSort();
     }
 
     @Test(expected = IllegalArgumentException.class)

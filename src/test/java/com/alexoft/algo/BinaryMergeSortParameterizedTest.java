@@ -15,20 +15,20 @@ import static org.junit.Assert.assertArrayEquals;
  * Uses parameters for testing data.
  */
 @RunWith(Parameterized.class)
-public class TopDownImplParameterizedTest {
+public class BinaryMergeSortParameterizedTest {
 
     private MergeSort mergeSort;
     private final int[] data;
     private final int[] expected;
 
-    public TopDownImplParameterizedTest(int[] data, int[] expected) {
+    public BinaryMergeSortParameterizedTest(int[] data, int[] expected) {
         this.data = data;
         this.expected = expected;
     }
 
     @Before
     public void setup() {
-        mergeSort = new TopDownImpl();
+        mergeSort = new BinaryMergeSort();
     }
 
     @Parameterized.Parameters
