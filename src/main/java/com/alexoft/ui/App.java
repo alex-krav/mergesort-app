@@ -1,15 +1,15 @@
 package com.alexoft.ui;
 
-import com.alexoft.log.Logger;
-import com.alexoft.log.TerminalLogger;
-import com.alexoft.log.FileLogger;
-import com.alexoft.random.IntGeneratorImpl;
-import com.alexoft.parser.ParserImpl;
-import com.alexoft.log.ScreenLogger;
-import com.alexoft.sorting.SortingImpl;
-import com.alexoft.algo.MultiwayMergeSortImpl;
 import com.alexoft.algo.NaturalMergeSortImpl;
+import com.alexoft.algo.ThreeWayMergeSort;
 import com.alexoft.algo.TopDownImpl;
+import com.alexoft.log.FileLogger;
+import com.alexoft.log.Logger;
+import com.alexoft.log.ScreenLogger;
+import com.alexoft.log.TerminalLogger;
+import com.alexoft.parser.ParserImpl;
+import com.alexoft.random.IntGeneratorImpl;
+import com.alexoft.sorting.SortingImpl;
 
 /**
  * MVC application to demonstrate merge sort implementations.
@@ -34,13 +34,7 @@ public class App {
         SortingImpl sortingService = new SortingImpl();
         sortingService.add(new TopDownImpl());
         sortingService.add(new NaturalMergeSortImpl());
-        sortingService.add(new MultiwayMergeSortImpl(2));
-        sortingService.add(new MultiwayMergeSortImpl(3));
-        sortingService.add(new MultiwayMergeSortImpl(4));
-        sortingService.add(new MultiwayMergeSortImpl(5));
-        sortingService.add(new MultiwayMergeSortImpl(6));
-        sortingService.add(new MultiwayMergeSortImpl(7));
-        sortingService.add(new MultiwayMergeSortImpl(8));
+        sortingService.add(new ThreeWayMergeSort());
 
         sortingService.setConsoleLog(new TerminalLogger());
         sortingService.setFileLog(fileLogger);
