@@ -1,9 +1,6 @@
 package com.alexoft.ui;
 
-import com.alexoft.algo.FourWayMergeSort;
-import com.alexoft.algo.NaturalMergeSort;
-import com.alexoft.algo.ThreeWayMergeSort;
-import com.alexoft.algo.BinaryMergeSort;
+import com.alexoft.algo.*;
 import com.alexoft.log.FileLogger;
 import com.alexoft.log.ScreenLogger;
 import com.alexoft.log.TerminalLogger;
@@ -34,6 +31,7 @@ public class App {
         sortingService.add(new NaturalMergeSort());
         sortingService.add(new ThreeWayMergeSort());
         sortingService.add(new FourWayMergeSort());
+        sortingService.add(new PolyphaseMergeSort());
 
         sortingService.setConsoleLog(new TerminalLogger());
         sortingService.setFileLog(new FileLogger());
