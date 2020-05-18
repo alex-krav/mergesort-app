@@ -9,6 +9,9 @@ import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.alexoft.common.FileUtils.save;
+import static com.alexoft.common.StringUtils.trim;
+
 /**
  * Controller class, that ties together app UI and sorting algorithms
  */
@@ -71,11 +74,11 @@ public class Controller {
         enableMenu(false);
         model.setActiveTab(view.getActiveTab());
 
-        int[] inputArray = getInputArray();
-        if (null != inputArray) {
+        File inputFile = getInputFile();
+        if (null != inputFile) {
             view.openLogPane();
             executor = Executors.newSingleThreadExecutor();
-            Runnable task = new SortingTask(inputArray, model.isAsc());
+            Runnable task = new SortingTask(inputFile, model.isAsc());
             executor.execute(task);
         } else {
             enableMenu(true);
@@ -96,8 +99,8 @@ public class Controller {
      * Selects input data and validates it.
      * @return input array
      */
-    private int[] getInputArray() {
-        int[] array = null;
+    private File getInputFile() {
+        File file = null;
         if (model.getActiveTab() == Model.Tab.TEXT) {
             // if current tab is TEXT, read input array from text field
             model.setInputText(view.getInputText());
@@ -106,8 +109,8 @@ public class Controller {
                 JOptionPane.showMessageDialog(view.getFrame(), "Empty input text!", "Error", JOptionPane.ERROR_MESSAGE);
             else
                 try {
-                    array = parser.readString(model.getInputText());
-                } catch(Exception e) {
+                    file = save("input_manual", model.getInputText());
+                } catch (Exception e) {
                     JOptionPane.showMessageDialog(view.getFrame(), "Wrong input text!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
         } else if (model.getActiveTab() == Model.Tab.FILE) {
@@ -117,7 +120,7 @@ public class Controller {
                 JOptionPane.showMessageDialog(view.getFrame(), "File not selected!", "Error", JOptionPane.ERROR_MESSAGE);
             else
                 try {
-                    array = parser.readFile(model.getInputFile());
+                    file = inputFile;
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(view.getFrame(), "Wrong input file!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -138,12 +141,13 @@ public class Controller {
                     if (model.getMinValue() > model.getMaxValue()) throw new IllegalArgumentException();
                 }
 
-                array = intGenerator.generate(model.getArraySize(), model.getMinValue(), model.getMaxValue());
+                file = intGenerator.generate(
+                        "input_random", model.getArraySize(), model.getMinValue(), model.getMaxValue());
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(view.getFrame(), "Wrong numbers!\nSet only array size (min 2) or\nsize with min and max values\n(min value < max value).", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        return array;
+        return file;
     }
 
     public void setParser(Parser parser) {
@@ -159,35 +163,20 @@ public class Controller {
     }
 
     /**
-     * Trims input file name to 40 characters before displaying it on view,
-     * so that it fits on panel
-     * @param name file name
-     * @return trimmed version of file name
-     */
-    private static String trim(String name) {
-        int extId = name.lastIndexOf('.');
-        String ext = (extId > -1) ? name.substring(extId) : "";
-        if (name.length() > 40)
-            return name.substring(0, 40) + "... " + ext;
-        else
-            return name;
-    }
-
-    /**
      * Class for running sorting in separate thread to not block UI
      */
     class SortingTask implements Runnable {
-        private int[] data;
+        private File file;
         private boolean asc;
 
-        public SortingTask(int[] data, boolean asc) {
-            this.data = data;
+        public SortingTask(File file, boolean asc) {
+            this.file = file;
             this.asc = asc;
         }
 
         @Override
         public void run() {
-            sorting.process(data, asc);
+            sorting.process(file, asc);
             enableMenu(true);
         }
     }
