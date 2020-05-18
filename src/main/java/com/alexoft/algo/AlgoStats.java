@@ -11,6 +11,7 @@ public class AlgoStats {
     private int merges; // number of array merges
     private int copies; // number of array copying
     private long timeNanoSeconds;
+    private int exceptions;
 
     public AlgoStats(String algoName) {
         this.algoName = algoName;
@@ -58,5 +59,13 @@ public class AlgoStats {
 
     public void setTimeNanoSeconds(long timeNanoSeconds) {
         this.timeNanoSeconds = timeNanoSeconds;
+    }
+
+    public int getExceptions() {
+        return exceptions;
+    }
+
+    public void addException() {
+        ++exceptions;
     }
 }
