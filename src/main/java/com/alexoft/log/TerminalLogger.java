@@ -2,10 +2,8 @@ package com.alexoft.log;
 
 import com.alexoft.algo.AlgoStats;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  * Implementation that logs to standard output stream via terminal
@@ -16,51 +14,76 @@ public class TerminalLogger implements Logger {
     // output stream for logging
     private Writer out = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    public void print(String text, int[] numbers) {
-        print(text);
-        print(numbers);
-    }
-
     /**
      * Logs single message. Adds line-breaks before and after message
      * @param text message string
      */
+    @Override
     public void print(String text) {
         try {
-            out.write("\n");
-            out.write(text);
-            out.write("\n");
+            out.write("\n" + text + "\n");
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Logs message and array of numbers. If array lengths is more than 10,
-     * then displays first and last 5 elements of array
-     * @param numbers integers array
-     */
-    public void print(int[] numbers) {
-        int n = numbers.length;
-        try {
+    @Override
+    public void print(String text, File file) {
+        try(Scanner s = new Scanner(file)) {
+            int size = s.nextInt();
+            out.write("\n"+text+"\n");
             out.write("[ ");
-            if (n > 10) {
+            if (size > 10) {
                 for(int i = 0; i < 5; ++i) {
-                    out.write(numbers[i]+"");
+                    out.write(s.nextInt()+"");
                     if (i < 4)
                         out.write(", ");
                 }
                 out.write(" ... ");
-                for(int i = n-5; i < n; ++i) {
-                    out.write(numbers[i]+"");
-                    if (i < n - 1)
+                for(int i = 0; i < size - 10; ++i)
+                    s.nextInt();
+                for(int i = 0; i < 5; ++i) {
+                    out.write(s.nextInt()+"");
+                    if (i < 4)
                         out.write(", ");
                 }
             } else
-                for(int i = 0; i < n; ++i) {
-                    out.write(numbers[i]+"");
-                    if (i < n - 1)
+                for(int i = 0; i < size; ++i) {
+                    out.write(s.nextInt()+"");
+                    if (i < size - 1)
+                        out.write(", ");
+                }
+            out.write(" ]\n");
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void print(String text, File file, int size) {
+        try(DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+            out.write("\n"+text+"\n");
+            out.write("[ ");
+            if (size > 10) {
+                for(int i = 0; i < 5; ++i) {
+                    out.write(in.readInt()+"");
+                    if (i < 4)
+                        out.write(", ");
+                }
+                out.write(" ... ");
+                for(int i = 0; i < size - 10; ++i)
+                    in.readInt();
+                for(int i = 0; i < 5; ++i) {
+                    out.write(in.readInt()+"");
+                    if (i < 4)
+                        out.write(", ");
+                }
+            } else
+                for(int i = 0; i < size; ++i) {
+                    out.write(in.readInt()+"");
+                    if (i < size - 1)
                         out.write(", ");
                 }
             out.write(" ]\n");
@@ -75,12 +98,14 @@ public class TerminalLogger implements Logger {
      * splits and merges
      * @param stats statistics object
      */
+    @Override
     public void print(AlgoStats stats) {
         try {
             out.write("\n");
             out.write(String.format("%s statistics\n", stats.getAlgoName()));
-            out.write(String.format("copies: %d\n", stats.getCopies()));
+            out.write(String.format("splits: %d\n", stats.getSplits()));
             out.write(String.format("merges: %d\n", stats.getMerges()));
+            out.write(String.format("exceptions: %d\n", stats.getExceptions()));
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 out.write(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
             else

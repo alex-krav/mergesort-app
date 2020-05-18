@@ -2,6 +2,8 @@ package com.alexoft.log;
 
 import com.alexoft.algo.AlgoStats;
 
+import java.io.File;
+
 /**
  * Interface for logging interim and output results,
  * as well as algorithms statistics
@@ -12,7 +14,7 @@ public interface Logger {
      * @param text message string
      * @param numbers integers array
      */
-    void print(String text, int[] numbers);
+    void print(String text, File file);
 
     /**
      * Prints text string
@@ -24,7 +26,7 @@ public interface Logger {
      * Prints integers array
      * @param numbers integers array
      */
-    void print(int[] numbers);
+    void print(String text, File file, int size);
 
     /**
      * Logs statistics of an algorithm, after

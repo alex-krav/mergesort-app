@@ -4,6 +4,8 @@ import com.alexoft.algo.AlgoStats;
 import com.alexoft.ui.View;
 
 import javax.swing.*;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  * Implementation for logging to program logging panel.
@@ -16,27 +18,34 @@ public class ScreenLogger implements Logger {
         this.screen = screen;
     }
 
-    public void print(String text, int[] numbers) {
+    @Override
+    public void print(String text, File file) {
         JTextArea textArea = screen.getTextArea();
         invoke(() -> {
-            textArea.append(text+"\n");
-            textArea.append("[ ");
-            for(int i = 0; i < numbers.length; ++i) {
-                textArea.append(numbers[i]+"");
-                if (i < numbers.length - 1)
-                    textArea.append(", ");
+            textArea.append(text+"\n[ ");
+            try (Scanner s = new Scanner(file)) {
+                int size = s.nextInt();
+                for (int i = 0; i < size; ++i) {
+                    textArea.append(s.nextInt() + "");
+                    if (i < size-1)
+                        textArea.append(", ");
+                }
+                textArea.append(" ]\n");
+            } catch(IOException e) {
+                e.printStackTrace();
             }
-            textArea.append(" ]\n");
         });
     }
 
+    @Override
     public void print(AlgoStats stats) {
         JTextArea textArea = screen.getTextArea();
         invoke(() -> {
             textArea.append("\n");
             textArea.append(String.format("%s statistics\n", stats.getAlgoName()));
-            textArea.append(String.format("copies: %d\n", stats.getCopies()));
+            textArea.append(String.format("splits: %d\n", stats.getSplits()));
             textArea.append(String.format("merges: %d\n", stats.getMerges()));
+            textArea.append(String.format("exceptions: %d\n", stats.getExceptions()));
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 textArea.append(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
             else
@@ -51,7 +60,7 @@ public class ScreenLogger implements Logger {
     }
 
     @Override
-    public void print(int[] numbers) {
+    public void print(String text, File file, int size) {
         throw new RuntimeException("Not implemented!");
     }
 
