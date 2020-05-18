@@ -6,6 +6,7 @@ import com.alexoft.sorting.Sorting;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -176,7 +177,14 @@ public class Controller {
 
         @Override
         public void run() {
-            sorting.process(file, asc);
+            try {
+                sorting.process(file, asc);
+            } catch (NoSuchElementException e) {
+                if (model.getActiveTab() == Model.Tab.TEXT)
+                    JOptionPane.showMessageDialog(view.getFrame(), "Wrong input text!", "Error", JOptionPane.ERROR_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(view.getFrame(), "Wrong input file!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             enableMenu(true);
         }
     }
