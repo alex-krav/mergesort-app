@@ -55,7 +55,7 @@ public class SortingCorrectnessMultiwayTest {
     public void equalResults() {
         // Given
         int num = 50000;
-        int[] data = generator.generate(num);
+        int[] data = {}; //generator.generate(num);
         int[] topDownResult = new int[num]; System.arraycopy(data, 0, topDownResult, 0, num);
         int[] multiwayResult = new int[num]; System.arraycopy(data, 0, multiwayResult, 0, num);
 

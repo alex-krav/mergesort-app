@@ -30,8 +30,8 @@ public class IntGeneratorImplTest {
         int number = 10;
         generator = new IntGeneratorImpl();
         // When
-        int[] array1 = generator.generate(number);
-        int[] array2 = generator.generate(number);
+        int[] array1 = {}; //generator.generate(number);
+        int[] array2 = {}; //generator.generate(number);
         // Then
         assertEquals(number, array1.length);
         assertEquals(number, array2.length);
@@ -44,8 +44,8 @@ public class IntGeneratorImplTest {
         int number = 10, min = 1, max = 50;
         generator = new IntGeneratorImpl(min, max);
         // When
-        int[] array1 = generator.generate(number);
-        int[] array2 = generator.generate(number);
+        int[] array1 = {}; //generator.generate(number);
+        int[] array2 = {}; //generator.generate(number);
         mergeSort.sort(array1);
         mergeSort.sort(array2);
 

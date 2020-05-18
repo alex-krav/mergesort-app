@@ -1,13 +1,19 @@
 package com.alexoft.random;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
+
+import static com.alexoft.common.StringUtils.generateFilename;
 
 /**
  * Random number generator class, that uses java.util.Random under the hood
  */
 public class IntGeneratorImpl implements IntGenerator {
 
-    private Random rand;
+    private final Random rand;
     private Integer min;
     private Integer max;
 
@@ -42,26 +48,26 @@ public class IntGeneratorImpl implements IntGenerator {
         this.max = max;
     }
 
-    /**
-     * Defines a default initialized array,
-     * then fills it with random numbers
-     * @param n size of array
-     * @return array of random integers
-     */
     @Override
-    public int[] generate(Integer n) {
-        int[] result = new int[n];
-        for (int i = 0; i < n; ++i) {
-            result[i] = getNext();
+    public File generate(String fileName, Integer size) {
+        File file = new File(generateFilename(fileName));
+
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+            out.write(size + "\n");
+            for (int i = 0; i < size; ++i)
+                out.write(getNext() + " ");
+            out.flush();
+        } catch(IOException e) {
+            e.printStackTrace();
         }
-        return result;
+        return file;
     }
 
     @Override
-    public int[] generate(Integer n, Integer min, Integer max) {
+    public File generate(String fileName, Integer size, Integer min, Integer max) {
         this.min = min;
         this.max = max;
-        return generate(n);
+        return generate(fileName, size);
     }
 
     /**

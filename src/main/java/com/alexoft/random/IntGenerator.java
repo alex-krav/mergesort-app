@@ -1,24 +1,28 @@
 package com.alexoft.random;
 
+import java.io.File;
+
 /**
  * Random integers generator interface.
  */
 public interface IntGenerator {
 
     /**
-     * Generates array of random integers with length n
-     * @param n size of array
-     * @return array of random integers
+     * Generates file of random integers with length n
+     * @param size size of array
+     * @param fileName name of file
+     * @return file of random integers
      */
-    int[] generate(Integer n);
+    File generate(String fileName, Integer size);
 
     /**
-     * Generates array of random integers with length n,
+     * Generates file of random integers with length n,
      * with minimum and maximum values passed as arguments
-     * @param n size of array
+     * @param size size of array
+     * @param fileName name of file
      * @param min minimum value of integer to be generated (inclusive)
      * @param max maximum value of integer to be generated (inclusive)
-     * @return array of random integers
+     * @return file of random integers
      */
-    int[] generate(Integer n, Integer min, Integer max);
+    File generate(String fileName, Integer size, Integer min, Integer max);
 }
