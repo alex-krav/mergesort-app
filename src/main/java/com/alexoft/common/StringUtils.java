@@ -20,4 +20,19 @@ public abstract class StringUtils {
         DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
         return timeStampPattern.format(java.time.LocalDateTime.now());
     }
+
+    /**
+     * Trims input file name to 40 characters before displaying it on view,
+     * so that it fits on panel
+     * @param name file name
+     * @return trimmed version of file name
+     */
+    public static String trim(String name) {
+        int extId = name.lastIndexOf('.');
+        String ext = (extId > -1) ? name.substring(extId) : "";
+        if (name.length() > 40)
+            return name.substring(0, 40) + "... " + ext;
+        else
+            return name;
+    }
 }
