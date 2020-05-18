@@ -1,40 +1,34 @@
-package com.alexoft.algo;
+package com.alexoft.algo.external;
 
+import com.alexoft.algo.AlgoStats;
 import com.alexoft.log.Logger;
 
-import static com.alexoft.log.TerminalLogger.MAX_INTERIM_RESULTS;
+import java.io.File;
 
 /**
  * Base class for merge sort implementations.
- * It incapsulates logging and statistics.
+ * It encapsulates logging and statistics.
  */
-public abstract class MergeSortBase implements MergeSort {
+public abstract class ExternalMergeSortBase implements ExternalMergeSort {
     protected AlgoStats algoStats;
     protected Logger logger;
     // sorts in ascending order by default
     protected boolean asc = true;
     // variables for limiting number of logged interim arrays
-    protected int logCounter, displayedCounter, divider;
+    protected int displayedCounter;
 
-    /**
-     * Initializes variables for limiting number of logged interim arrays.
-     * Maximum 50 interim arrays will be displayed.
-     * @param length array length
-     */
-    protected void initInterimResultCounters(int length) {
-        logCounter = displayedCounter = 0;
-        divider = length / MAX_INTERIM_RESULTS;
-        if (divider == 0) divider = 1;
+    protected void initInterimResultCounters() {
+        displayedCounter = 0;
     }
 
     /**
      * Logs interim array
      * @param array integers array
      */
-    protected void logInterim(String message, int[] array) {
-        if (++logCounter % divider == 0) {
+    protected void logInterim(String message, File array, int size) {
+        if (null != logger) {
             ++displayedCounter;
-            log(String.format(message + " %d (%d)", logCounter, displayedCounter), array);
+            logger.print(String.format(message + " %d", displayedCounter), array, size);
         }
     }
 
@@ -84,9 +78,9 @@ public abstract class MergeSortBase implements MergeSort {
      * @param message message string
      * @param numbers integer array
      */
-    public void log(String message, int[] numbers) {
-//        if (null != logger)
-//            logger.print(message, numbers);
+    public void log(String message, File numbers) {
+        if (null != logger)
+            logger.print(message, numbers);
     }
 
     protected String getAscString() {
