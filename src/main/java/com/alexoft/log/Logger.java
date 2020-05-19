@@ -3,6 +3,7 @@ package com.alexoft.log;
 import com.alexoft.algo.AlgoStats;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Interface for logging interim and output results,
@@ -27,6 +28,8 @@ public interface Logger {
      * @param numbers integers array
      */
     void print(String text, File file, int size);
+
+    void print(String text, List<Integer> list, int size);
 
     /**
      * Logs statistics of an algorithm, after

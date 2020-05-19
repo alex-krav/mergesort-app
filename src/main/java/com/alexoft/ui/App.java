@@ -1,6 +1,7 @@
 package com.alexoft.ui;
 
-import com.alexoft.algo.external.ExternalDirectMergeSort;
+import com.alexoft.algo.external.Balanced2wayMergeSort;
+import com.alexoft.algo.external.DirectMergeSort;
 import com.alexoft.log.ScreenLogger;
 import com.alexoft.log.TerminalLogger;
 import com.alexoft.parser.ParserImpl;
@@ -26,7 +27,8 @@ public class App {
         c.setIntGenerator(new IntGeneratorImpl());
 
         SortingImpl sortingService = new SortingImpl();
-        sortingService.add(new ExternalDirectMergeSort());
+        sortingService.add(new DirectMergeSort());
+        sortingService.add(new Balanced2wayMergeSort());
 
         sortingService.setTerminalLog(new TerminalLogger());
         sortingService.setScreenLog(new ScreenLogger(v.getLogPane()));

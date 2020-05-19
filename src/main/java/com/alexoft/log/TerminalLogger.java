@@ -3,6 +3,7 @@ package com.alexoft.log;
 import com.alexoft.algo.AlgoStats;
 
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -84,6 +85,36 @@ public class TerminalLogger implements Logger {
                 for(int i = 0; i < size; ++i) {
                     out.write(in.readInt()+"");
                     if (i < size - 1)
+                        out.write(", ");
+                }
+            out.write(" ]\n");
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void print(String text, List<Integer> list, int size) {
+        try {
+            out.write("\n"+text+"\n");
+            out.write("[ ");
+            if (size > 10) {
+                for(int i = 0; i < 5; ++i) {
+                    out.write(list.get(i)+"");
+                    if (i < 4)
+                        out.write(", ");
+                }
+                out.write(" ... ");
+                for(int i = 5; i < 10; ++i) {
+                    out.write(list.get(i)+"");
+                    if (i < 9)
+                        out.write(", ");
+                }
+            } else
+                for(int i = 0; i < list.size(); ++i) {
+                    out.write(list.get(i)+"");
+                    if (i < list.size() - 1)
                         out.write(", ");
                 }
             out.write(" ]\n");

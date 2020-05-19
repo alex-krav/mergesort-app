@@ -5,6 +5,7 @@ import com.alexoft.ui.View;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -61,6 +62,11 @@ public class ScreenLogger implements Logger {
 
     @Override
     public void print(String text, File file, int size) {
+        throw new RuntimeException("Not implemented!");
+    }
+
+    @Override
+    public void print(String text, List<Integer> list, int size) {
         throw new RuntimeException("Not implemented!");
     }
 

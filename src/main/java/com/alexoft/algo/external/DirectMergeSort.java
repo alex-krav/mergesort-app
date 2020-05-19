@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-public class ExternalDirectMergeSort extends ExternalMergeSortBase {
+public class DirectMergeSort extends ExternalMergeSortBase {
     private Comparator<HeapNode> comparator;
 
     @Override

@@ -4,6 +4,7 @@ import com.alexoft.algo.AlgoStats;
 import com.alexoft.log.Logger;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Base class for merge sort implementations.
@@ -29,6 +30,13 @@ public abstract class ExternalMergeSortBase implements ExternalMergeSort {
         if (null != logger) {
             ++displayedCounter;
             logger.print(String.format(message + " %d", displayedCounter), array, size);
+        }
+    }
+
+    protected void logInterim(String message, List<Integer> list, int size) {
+        if (null != logger) {
+            ++displayedCounter;
+            logger.print(String.format(message + " %d", displayedCounter), list, size);
         }
     }
 
