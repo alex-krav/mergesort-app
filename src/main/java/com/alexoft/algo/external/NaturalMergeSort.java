@@ -5,7 +5,7 @@ import com.alexoft.algo.AlgoStats;
 import java.io.*;
 import java.util.*;
 
-public class NaturalDirectMergeSort extends ExternalMergeSortBase {
+public class NaturalMergeSort extends ExternalMergeSortBase {
     private Comparator<HeapNode> comparator;
     private int size;
 
@@ -129,12 +129,22 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
                         if (counter.idle != null) { bOut.writeInt(counter.idle); counter.idle = null; ++counter.read; }
                         if (counter.i < this.size) {
                             current = aIn.nextInt(); ++counter.i; ++counter.read;
-                            if (current <= counter.prev == isAscending()) {
-                                counter.idle = counter.prev = current;
-                                first = false;
+                            if (isAscending()) {
+                                if (current < counter.prev == isAscending()) {
+                                    counter.idle = counter.prev = current;
+                                    first = false;
+                                } else {
+                                    counter.prev = current;
+                                    bOut.writeInt(current);
+                                }
                             } else {
-                                counter.prev = current;
-                                bOut.writeInt(current);
+                                if (current <= counter.prev == isAscending()) {
+                                    counter.idle = counter.prev = current;
+                                    first = false;
+                                } else {
+                                    counter.prev = current;
+                                    bOut.writeInt(current);
+                                }
                             }
                         }
                     }
@@ -143,13 +153,24 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
                     if (counter.idle != null) { cOut.writeInt(counter.idle); counter.idle = null; }
                     if (counter.i < this.size) {
                         current = aIn.nextInt(); ++counter.i; ++counter.read;
-                        if (current <= counter.prev == isAscending()) {
-                            counter.idle = counter.prev = current;
-                            --counter.read;
-                            break;
+                        if (isAscending()) {
+                            if (current < counter.prev == isAscending()) {
+                                counter.idle = counter.prev = current;
+                                --counter.read;
+                                break;
+                            } else {
+                                counter.prev = current;
+                                cOut.writeInt(current);
+                            }
                         } else {
-                            counter.prev = current;
-                            cOut.writeInt(current);
+                            if (current <= counter.prev == isAscending()) {
+                                counter.idle = counter.prev = current;
+                                --counter.read;
+                                break;
+                            } else {
+                                counter.prev = current;
+                                cOut.writeInt(current);
+                            }
                         }
                     }
                 }
@@ -176,12 +197,22 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
                         if (counter.idle != null) { bOut.writeInt(counter.idle); counter.idle = null; ++counter.read; }
                         if (counter.i < this.size) {
                             current = aIn.readInt(); ++counter.i; ++counter.read;
-                            if (current <= counter.prev == isAscending()) {
-                                counter.idle = counter.prev = current;
-                                first = false;
+                            if (isAscending()) {
+                                if (current < counter.prev == isAscending()) {
+                                    counter.idle = counter.prev = current;
+                                    first = false;
+                                } else {
+                                    counter.prev = current;
+                                    bOut.writeInt(current);
+                                }
                             } else {
-                                counter.prev = current;
-                                bOut.writeInt(current);
+                                if (current <= counter.prev == isAscending()) {
+                                    counter.idle = counter.prev = current;
+                                    first = false;
+                                } else {
+                                    counter.prev = current;
+                                    bOut.writeInt(current);
+                                }
                             }
                         }
                     }
@@ -190,13 +221,24 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
                     if (counter.idle != null) { cOut.writeInt(counter.idle); counter.idle = null; }
                     if (counter.i < this.size) {
                         current = aIn.readInt(); ++counter.i; ++counter.read;
-                        if (current <= counter.prev == isAscending()) {
-                            counter.idle = counter.prev = current;
-                            --counter.read;
-                            break;
+                        if (isAscending()) {
+                            if (current < counter.prev == isAscending()) {
+                                counter.idle = counter.prev = current;
+                                --counter.read;
+                                break;
+                            } else {
+                                counter.prev = current;
+                                cOut.writeInt(current);
+                            }
                         } else {
-                            counter.prev = current;
-                            cOut.writeInt(current);
+                            if (current <= counter.prev == isAscending()) {
+                                counter.idle = counter.prev = current;
+                                --counter.read;
+                                break;
+                            } else {
+                                counter.prev = current;
+                                cOut.writeInt(current);
+                            }
                         }
                     }
                 }
