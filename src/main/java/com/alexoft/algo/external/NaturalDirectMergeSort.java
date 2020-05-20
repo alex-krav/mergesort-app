@@ -21,27 +21,19 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
                 ? Comparator.comparingInt(x -> x.val)
                 : Comparator.<HeapNode>comparingInt(x -> x.val).reversed();
         algoStats = new AlgoStats("Natural merge sort");
+        initInterimResultCounters();
         naturalDirectSort(file);
         log("Natural merge sort output", file);
         algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
     }
 
     private void naturalDirectSort(File aTmp) {
-//        int size = 0;
-//        try(Scanner s = new Scanner(aTmp)) {
-//            size = s.nextInt();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        if (size < 1) return;
-//        algoStats.setArraySize(size);
-        initInterimResultCounters();
         // create two working files
         File bTmp = new File("b.tmp");
         File cTmp = new File("c.tmp");
         File dTmp = new File("d.tmp");
 
-        boolean first = true, init = true, done = false;
+        boolean first = true, init = true, done;
         // split-merge cycle: split a to b,c -> then merge b,c to a
         while(true)
         {
@@ -54,7 +46,7 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
             first = !first;
         }
 
-        if (first) {
+        if (first && this.size >= 2) {
             // save name and del original aTmp
             File originalFileName = new File(aTmp.getParent(), aTmp.getName());
             if (!aTmp.delete())
@@ -72,24 +64,21 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
     }
 
     private static class Counter {
-//        public int size;
         public int i = 0; //total read
         public int read = 0; //read in one split
         public Integer idle;
         public Integer prev;
         public boolean append;
-//        public Counter(int size) { this.size=size; }
     }
 
-    private boolean fileSplitMergeSave(File aTmp, File bTmp, File cTmp, File dTmp,
-                                       boolean init) {
+    private boolean fileSplitMergeSave(File aTmp, File bTmp, File cTmp, File dTmp, boolean init) {
         boolean done = false;
         if (init) {
             try(Scanner aIn = new Scanner(aTmp)) {
                 this.size = aIn.nextInt();
-                if (this.size < 2) return true; //todo: del b,c,d? (first=true)
+                if (this.size < 2) return true;
                 algoStats.setArraySize(this.size);
-                Counter counter = new Counter(/*this.size*/);
+                Counter counter = new Counter();
                 while (counter.i < this.size || counter.idle != null) {
                     // split to B,C + count READ
                     fileSplitNatural(aIn, bTmp, cTmp, counter);
@@ -106,7 +95,7 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
             }
         } else {
             try (DataInputStream aIn = new DataInputStream(new BufferedInputStream(new FileInputStream(aTmp)))) {
-                Counter counter = new Counter(/*this.size*/);
+                Counter counter = new Counter();
                 while (counter.i < this.size || counter.idle != null) {
                     // split to B,C + count READ
                     fileSplitNatural(aIn, bTmp, cTmp, counter);
@@ -177,7 +166,7 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
         try(DataOutputStream bOut = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(bTmp)));
             DataOutputStream cOut = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(cTmp)))) {
 
-            boolean first = true; int current = 0; counter.read = 0;
+            boolean first = true; int current; counter.read = 0;
             while(counter.i < this.size || counter.idle != null) {
                 if (first) {
                     if (null == counter.prev) {
@@ -247,7 +236,6 @@ public class NaturalDirectMergeSort extends ExternalMergeSortBase {
                 while (!pq.isEmpty()) {
                     HeapNode root = pq.remove();
                     aOut.writeInt(root.val);
-
 
                     if (i < counter.read && has[root.id]) {
                         try {
