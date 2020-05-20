@@ -123,9 +123,9 @@ public class Balanced2wayMergeSort extends ExternalMergeSortBase {
 
                     if (i < size && inI[root.id] < width) {
                         try {
-                            pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i; ++inI[root.id]; algoStats.addException();
+                            pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i; ++inI[root.id];
                         } catch (IOException e) {
-                            inI[root.id] = width;
+                            inI[root.id] = width; algoStats.addException();
                         }
                     }
                 }
@@ -169,9 +169,9 @@ public class Balanced2wayMergeSort extends ExternalMergeSortBase {
 
                     if (i < size && inI[root.id] < width) {
                         try {
-                            pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i; ++inI[root.id]; algoStats.addException();
+                            pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i; ++inI[root.id];
                         } catch (IOException e) {
-                            inI[root.id] = width;
+                            inI[root.id] = width; algoStats.addException();
                         }
                     }
                 }
