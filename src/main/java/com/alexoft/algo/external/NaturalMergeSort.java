@@ -266,13 +266,13 @@ public class NaturalMergeSort extends ExternalMergeSortBase {
                 try {
                     pq.add(new HeapNode(in[0].readInt(), 0)); ++i;
                 } catch (IOException e) {
-                    has[0] = false; algoStats.addException();
+                    has[0] = false;
                 }
                 if (i < counter.read)
                     try {
                         pq.add(new HeapNode(in[1].readInt(), 1)); ++i;
                     } catch (IOException e) {
-                        has[1] = false; algoStats.addException();
+                        has[1] = false;
                     }
 
                 while (!pq.isEmpty()) {
@@ -283,7 +283,7 @@ public class NaturalMergeSort extends ExternalMergeSortBase {
                         try {
                             pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i;
                         } catch (IOException e) {
-                            has[root.id] = false; algoStats.addException();
+                            has[root.id] = false;
                         }
                     }
                 }
@@ -310,13 +310,13 @@ public class NaturalMergeSort extends ExternalMergeSortBase {
                 try {
                     pq.add(new HeapNode(in[0].readInt(), 0)); ++i;
                 } catch (IOException e) {
-                    has[0] = false; algoStats.addException();
+                    has[0] = false;
                 }
                 if (i < counter.read)
                     try {
                         pq.add(new HeapNode(in[1].readInt(), 1)); ++i;
                     } catch (IOException e) {
-                        has[1] = false; algoStats.addException();
+                        has[1] = false;
                     }
 
                 while (!pq.isEmpty()) {
@@ -327,7 +327,7 @@ public class NaturalMergeSort extends ExternalMergeSortBase {
                         try {
                             pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i;
                         } catch (IOException e) {
-                            has[root.id] = false; algoStats.addException();
+                            has[root.id] = false;
                         }
                     }
                 }

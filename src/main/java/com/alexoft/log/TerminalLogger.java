@@ -134,7 +134,6 @@ public class TerminalLogger implements Logger {
             out.write(String.format("%s statistics\n", stats.getAlgoName()));
             out.write(String.format("splits: %d\n", stats.getSplits()));
             out.write(String.format("merges: %d\n", stats.getMerges()));
-            out.write(String.format("exceptions: %d\n", stats.getExceptions()));
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 out.write(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
             else

@@ -106,13 +106,13 @@ public class Balanced2wayMergeSort extends ExternalMergeSortBase {
                 try {
                     pq.add(new HeapNode(in[0].readInt(), 0)); ++i; ++inI[0];
                 } catch (IOException e) {
-                    inI[0] = width; algoStats.addException();
+                    inI[0] = width;
                 }
                 if (i < size)
                     try {
                         pq.add(new HeapNode(in[1].readInt(), 1)); ++i; ++inI[1];
                     } catch (IOException e) {
-                        inI[1] = width; algoStats.addException();
+                        inI[1] = width;
                     }
 
                 while (!pq.isEmpty()) {
@@ -125,7 +125,7 @@ public class Balanced2wayMergeSort extends ExternalMergeSortBase {
                         try {
                             pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i; ++inI[root.id];
                         } catch (IOException e) {
-                            inI[root.id] = width; algoStats.addException();
+                            inI[root.id] = width;
                         }
                     }
                 }
@@ -154,13 +154,13 @@ public class Balanced2wayMergeSort extends ExternalMergeSortBase {
                 try {
                     pq.add(new HeapNode(in[0].readInt(), 0)); ++i; ++inI[0];
                 } catch (IOException e) {
-                    inI[0] = width; algoStats.addException();
+                    inI[0] = width;
                 }
                 if (i < size)
                     try {
                         pq.add(new HeapNode(in[1].readInt(), 1)); ++i; ++inI[1];
                     } catch (IOException e) {
-                        inI[1] = width; algoStats.addException();
+                        inI[1] = width;
                     }
 
                 while (!pq.isEmpty()) {
@@ -171,7 +171,7 @@ public class Balanced2wayMergeSort extends ExternalMergeSortBase {
                         try {
                             pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i; ++inI[root.id];
                         } catch (IOException e) {
-                            inI[root.id] = width; algoStats.addException();
+                            inI[root.id] = width;
                         }
                     }
                 }
