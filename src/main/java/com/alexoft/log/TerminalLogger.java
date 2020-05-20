@@ -74,8 +74,6 @@ public class TerminalLogger implements Logger {
                         out.write(", ");
                 }
                 out.write(" ... ");
-                for(int i = 0; i < size - 10; ++i)
-                    in.readInt();
                 for(int i = 0; i < 5; ++i) {
                     out.write(in.readInt()+"");
                     if (i < 4)

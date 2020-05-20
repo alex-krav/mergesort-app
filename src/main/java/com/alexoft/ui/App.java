@@ -2,6 +2,7 @@ package com.alexoft.ui;
 
 import com.alexoft.algo.external.Balanced2wayMergeSort;
 import com.alexoft.algo.external.DirectMergeSort;
+import com.alexoft.algo.external.NaturalDirectMergeSort;
 import com.alexoft.log.ScreenLogger;
 import com.alexoft.log.TerminalLogger;
 import com.alexoft.parser.ParserImpl;
@@ -28,6 +29,7 @@ public class App {
 
         SortingImpl sortingService = new SortingImpl();
         sortingService.add(new DirectMergeSort());
+        sortingService.add(new NaturalDirectMergeSort());
         sortingService.add(new Balanced2wayMergeSort());
 
         sortingService.setTerminalLog(new TerminalLogger());
