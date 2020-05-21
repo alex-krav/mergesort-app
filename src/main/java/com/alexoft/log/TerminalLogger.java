@@ -132,8 +132,10 @@ public class TerminalLogger implements Logger {
         try {
             out.write("\n");
             out.write(String.format("%s statistics\n", stats.getAlgoName()));
+            out.write(String.format("size: %d\n", stats.getArraySize()));
             out.write(String.format("splits: %d\n", stats.getSplits()));
             out.write(String.format("merges: %d\n", stats.getMerges()));
+            out.write("complexity: " + formatter.format(stats.countComplexity()) + "\n");
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 out.write(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
             else if (stats.getTimeNanoSeconds()/1_000_000_000 == 0)

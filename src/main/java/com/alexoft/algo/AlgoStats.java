@@ -59,4 +59,8 @@ public class AlgoStats {
     public void setTimeNanoSeconds(long timeNanoSeconds) {
         this.timeNanoSeconds = timeNanoSeconds;
     }
+
+    public long countComplexity() {
+        return 2L*getArraySize()*(getMerges()+getSplits());
+    }
 }

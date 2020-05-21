@@ -3,6 +3,7 @@ package com.alexoft.log;
 import com.alexoft.algo.AlgoStats;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -10,6 +11,7 @@ import java.util.List;
  * as well as algorithms statistics
  */
 public interface Logger {
+    DecimalFormat formatter = new DecimalFormat("#,###");
     /**
      * Prints text string and integers array.
      * @param text message string

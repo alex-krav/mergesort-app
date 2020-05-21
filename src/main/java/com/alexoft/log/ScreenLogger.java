@@ -44,8 +44,10 @@ public class ScreenLogger implements Logger {
         invoke(() -> {
             textArea.append("\n");
             textArea.append(String.format("%s statistics\n", stats.getAlgoName()));
+            textArea.append(String.format("size: %d\n", stats.getArraySize()));
             textArea.append(String.format("splits: %d\n", stats.getSplits()));
             textArea.append(String.format("merges: %d\n", stats.getMerges()));
+            textArea.append("complexity: " + formatter.format(stats.countComplexity()) + "\n");
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 textArea.append(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
             else if (stats.getTimeNanoSeconds()/1_000_000_000 == 0)
