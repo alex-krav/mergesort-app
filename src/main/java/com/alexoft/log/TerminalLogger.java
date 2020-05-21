@@ -136,8 +136,10 @@ public class TerminalLogger implements Logger {
             out.write(String.format("merges: %d\n", stats.getMerges()));
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 out.write(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
-            else
+            else if (stats.getTimeNanoSeconds()/1_000_000_000 == 0)
                 out.write(String.format("time: %d ms\n", stats.getTimeNanoSeconds()/1_000_000));
+            else
+                out.write(String.format("time: %d s\n", stats.getTimeNanoSeconds()/1_000_000_000));
             // TODO: calc O notation from N elements ?
             out.flush();
         } catch (IOException e) {

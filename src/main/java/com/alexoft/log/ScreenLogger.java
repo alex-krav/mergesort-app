@@ -48,8 +48,10 @@ public class ScreenLogger implements Logger {
             textArea.append(String.format("merges: %d\n", stats.getMerges()));
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 textArea.append(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
-            else
+            else if (stats.getTimeNanoSeconds()/1_000_000_000 == 0)
                 textArea.append(String.format("time: %d ms\n", stats.getTimeNanoSeconds()/1_000_000));
+            else
+                textArea.append(String.format("time: %d s\n", stats.getTimeNanoSeconds()/1_000_000_000));
             // TODO: calc O notation from N elements ?
         });
     }
