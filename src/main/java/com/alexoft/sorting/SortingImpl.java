@@ -29,14 +29,9 @@ public class SortingImpl implements Sorting {
         this.sorters.add(mergeSort);
     }
 
-    /**
-     * Method creates a copy of array before invoking new sort.
-     * Output array is saved to file.
-     * @param inputFile integer array
-     * @param asc boolean flag (true - ascending order, false - descending order)
-     */
     @Override
     public void process(File inputFile, boolean asc) {
+        // clear statistics of previous run
         statResults.clear();
         // log input data
         terminalLog.print("input array", inputFile);
@@ -58,9 +53,10 @@ public class SortingImpl implements Sorting {
     }
 
     /**
-     * Method changes input array. Interim results and output array are logged.
-     * @param sorter MergeSort implementation object
-     * @param originalFile integer array
+     * Method creates a copy of file before invoking sort. If it's not last sorting,
+     * copy file is removed, otherwise saved with sorting result.
+     * @param sorter ExternalMergeSort implementation object
+     * @param originalFile file with integer array
      * @param asc boolean flag (true - ascending order, false - descending order)
      */
     @Override

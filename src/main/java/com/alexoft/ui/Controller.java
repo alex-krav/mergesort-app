@@ -1,6 +1,5 @@
 package com.alexoft.ui;
 
-import com.alexoft.parser.Parser;
 import com.alexoft.random.IntGenerator;
 import com.alexoft.sorting.Sorting;
 
@@ -19,7 +18,6 @@ import static com.alexoft.common.StringUtils.trim;
 public class Controller {
     private Model model;
     private View view;
-    private Parser parser;
     private IntGenerator intGenerator;
     private Sorting sorting;
     private ExecutorService executor;
@@ -69,12 +67,14 @@ public class Controller {
     }
 
     /**
-     * Sorts selected input array
+     * Sorts selected input file
      */
     private void sort() {
+        // disable user menu
         enableMenu(false);
         model.setActiveTab(view.getActiveTab());
 
+        // get input file and provide it for a sorting task
         File inputFile = getInputFile();
         if (null != inputFile) {
             view.openLogPane();
@@ -82,6 +82,7 @@ public class Controller {
             Runnable task = new SortingTask(inputFile, model.isAsc());
             executor.execute(task);
         } else {
+            // enable user menu
             enableMenu(true);
         }
     }
@@ -98,7 +99,7 @@ public class Controller {
 
     /**
      * Selects input data and validates it.
-     * @return input array
+     * @return input file
      */
     private File getInputFile() {
         File file = null;
@@ -126,7 +127,7 @@ public class Controller {
                     JOptionPane.showMessageDialog(view.getFrame(), "Wrong input file!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
         } else {
-            // if current tab is GENERATE, create array of random integers
+            // if current tab is GENERATE, create file with random integers
             try {
                 model.setArraySize(Integer.valueOf(view.getArraySize()));
                 // minimum array size is 2
@@ -145,14 +146,11 @@ public class Controller {
                 file = intGenerator.generate(
                         "input_random", model.getArraySize(), model.getMinValue(), model.getMaxValue());
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(view.getFrame(), "Wrong numbers!\nSet only array size (min 2) or\nsize with min and max values\n(min value < max value).", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view.getFrame(), "Wrong numbers!\nSet only array size (min 2) " +
+                        "or\nsize with min and max values\n(min value < max value).", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         return file;
-    }
-
-    public void setParser(Parser parser) {
-        this.parser = parser;
     }
 
     public void setIntGenerator(IntGenerator intGenerator) {
@@ -164,11 +162,11 @@ public class Controller {
     }
 
     /**
-     * Class for running sorting in separate thread to not block UI
+     * Class for running sorting task in separate thread to not block UI
      */
     class SortingTask implements Runnable {
-        private File file;
-        private boolean asc;
+        private final File file;
+        private final boolean asc;
 
         public SortingTask(File file, boolean asc) {
             this.file = file;

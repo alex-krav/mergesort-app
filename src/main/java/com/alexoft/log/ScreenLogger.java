@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Implementation for logging to program logging panel.
+ * Implementation for logging to application logging panel.
  */
 public class ScreenLogger implements Logger {
     // logging panel (JPanel of Swing framework)
-    private View.LogPane screen;
+    private final View.LogPane screen;
 
     public ScreenLogger(View.LogPane screen) {
         this.screen = screen;
@@ -26,6 +26,7 @@ public class ScreenLogger implements Logger {
             textArea.append(text+"\n[ ");
             try (Scanner s = new Scanner(file)) {
                 int size = s.nextInt();
+                // print all numbers from file, split with comma
                 for (int i = 0; i < size; ++i) {
                     textArea.append(s.nextInt() + "");
                     if (i < size-1)
@@ -48,13 +49,13 @@ public class ScreenLogger implements Logger {
             textArea.append(String.format("splits: %d\n", stats.getSplits()));
             textArea.append(String.format("merges: %d\n", stats.getMerges()));
             textArea.append("complexity: " + formatter.format(stats.countComplexity()) + "\n");
+            // write running time in ns, ms or seconds
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 textArea.append(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
             else if (stats.getTimeNanoSeconds()/1_000_000_000 == 0)
                 textArea.append(String.format("time: %d ms\n", stats.getTimeNanoSeconds()/1_000_000));
             else
                 textArea.append(String.format("time: %d s\n", stats.getTimeNanoSeconds()/1_000_000_000));
-            // TODO: calc O notation from N elements ?
         });
     }
 

@@ -13,7 +13,7 @@ public class TerminalLogger implements Logger {
     // number of logged interim arrays while algorithm work
     public static int MAX_INTERIM_RESULTS = 50;
     // output stream for logging
-    private Writer out = new BufferedWriter(new OutputStreamWriter(System.out));
+    private final Writer out = new BufferedWriter(new OutputStreamWriter(System.out));
 
     /**
      * Logs single message. Adds line-breaks before and after message
@@ -36,19 +36,13 @@ public class TerminalLogger implements Logger {
             out.write("\n"+text+"\n");
             out.write("[ ");
             if (size > 10) {
-                for(int i = 0; i < 5; ++i) {
+                // write first ten numbers
+                for(int i = 0; i < 10; ++i) {
                     out.write(s.nextInt()+"");
-                    if (i < 4)
+                    if (i < 9)
                         out.write(", ");
                 }
                 out.write(" ... ");
-                for(int i = 0; i < size - 10; ++i)
-                    s.nextInt();
-                for(int i = 0; i < 5; ++i) {
-                    out.write(s.nextInt()+"");
-                    if (i < 4)
-                        out.write(", ");
-                }
             } else
                 for(int i = 0; i < size; ++i) {
                     out.write(s.nextInt()+"");
@@ -67,18 +61,14 @@ public class TerminalLogger implements Logger {
         try(DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
             out.write("\n"+text+"\n");
             out.write("[ ");
+            // write first ten numbers
             if (size > 10) {
-                for(int i = 0; i < 5; ++i) {
+                for(int i = 0; i < 10; ++i) {
                     out.write(in.readInt()+"");
-                    if (i < 4)
+                    if (i < 9)
                         out.write(", ");
                 }
                 out.write(" ... ");
-                for(int i = 0; i < 5; ++i) {
-                    out.write(in.readInt()+"");
-                    if (i < 4)
-                        out.write(", ");
-                }
             } else
                 for(int i = 0; i < size; ++i) {
                     out.write(in.readInt()+"");
@@ -97,18 +87,14 @@ public class TerminalLogger implements Logger {
         try {
             out.write("\n"+text+"\n");
             out.write("[ ");
+            // write first ten numbers
             if (size > 10) {
-                for(int i = 0; i < 5; ++i) {
-                    out.write(list.get(i)+"");
-                    if (i < 4)
-                        out.write(", ");
-                }
-                out.write(" ... ");
-                for(int i = 5; i < 10; ++i) {
+                for(int i = 0; i < 10; ++i) {
                     out.write(list.get(i)+"");
                     if (i < 9)
                         out.write(", ");
                 }
+                out.write(" ... ");
             } else
                 for(int i = 0; i < list.size(); ++i) {
                     out.write(list.get(i)+"");
@@ -136,13 +122,13 @@ public class TerminalLogger implements Logger {
             out.write(String.format("splits: %d\n", stats.getSplits()));
             out.write(String.format("merges: %d\n", stats.getMerges()));
             out.write("complexity: " + formatter.format(stats.countComplexity()) + "\n");
+            // write time of running in ns, ms or seconds
             if (stats.getTimeNanoSeconds()/1_000_000 == 0)
                 out.write(String.format("time: %d ns\n", stats.getTimeNanoSeconds()));
             else if (stats.getTimeNanoSeconds()/1_000_000_000 == 0)
                 out.write(String.format("time: %d ms\n", stats.getTimeNanoSeconds()/1_000_000));
             else
                 out.write(String.format("time: %d s\n", stats.getTimeNanoSeconds()/1_000_000_000));
-            // TODO: calc O notation from N elements ?
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();

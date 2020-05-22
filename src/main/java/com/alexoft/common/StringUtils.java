@@ -2,8 +2,16 @@ package com.alexoft.common;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Utility class for work with strings.
+ */
 public abstract class StringUtils {
 
+    /**
+     * Prepends date and time to filename
+     * @param fileName original filename
+     * @return updated filename
+     */
     public static String generateFilename(String fileName) {
         if (null == fileName)
             fileName = String.format("%s.txt", generateDateTime());
@@ -13,8 +21,8 @@ public abstract class StringUtils {
     }
 
     /**
-     * Generates file name using datetime pattern, like output_2020-05-05_21-13-10.txt
-     * @return file name string
+     * Generates string using datetime pattern, like output_2020-05-05_21-13-10
+     * @return datetime string
      */
     public static String generateDateTime() {
         DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");

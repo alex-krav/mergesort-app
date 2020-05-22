@@ -5,7 +5,6 @@ import com.alexoft.algo.external.DirectMergeSort;
 import com.alexoft.algo.external.NaturalMergeSort;
 import com.alexoft.log.ScreenLogger;
 import com.alexoft.log.TerminalLogger;
-import com.alexoft.parser.ParserImpl;
 import com.alexoft.random.IntGeneratorImpl;
 import com.alexoft.sorting.SortingImpl;
 
@@ -24,7 +23,6 @@ public class App {
         Controller c = new Controller(m, v);
         c.initController();
 
-        c.setParser(new ParserImpl());
         c.setIntGenerator(new IntGeneratorImpl());
 
         SortingImpl sortingService = new SortingImpl();

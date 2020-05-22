@@ -11,22 +11,22 @@ import java.io.File;
 public interface Sorting {
 
     /**
-     * Adds a MergeSort implementation for later processing.
-     * @param mergeSort MergeSort implementation object
+     * Adds an ExternalMergeSort implementation for later processing.
+     * @param mergeSort ExternalMergeSort implementation object
      */
     void add(ExternalMergeSort mergeSort);
 
     /**
-     * Iteratively applies sorting algorithms to an input array.
-     * @param numbers integer array
+     * Iteratively applies sorting algorithms to an input file.
+     * @param numbers file with integer array
      * @param asc boolean flag (true - ascending order, false - descending order)
      */
     void process(File numbers, boolean asc);
 
     /**
      * Sorts data array using selected sorting method.
-     * @param sorter MergeSort implementation object
-     * @param data integer array
+     * @param sorter ExternalMergeSort implementation object
+     * @param data file with integer array
      * @param asc boolean flag (true - ascending order, false - descending order)
      */
     void apply(ExternalMergeSort sorter, File data, boolean asc);

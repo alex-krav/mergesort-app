@@ -11,11 +11,13 @@ import java.util.List;
  * as well as algorithms statistics
  */
 public interface Logger {
+    // number format for algorithm complexity number
     DecimalFormat formatter = new DecimalFormat("#,###");
+
     /**
-     * Prints text string and integers array.
+     * Prints text string and file with integers array.
      * @param text message string
-     * @param numbers integers array
+     * @param file file with integers array
      */
     void print(String text, File file);
 
@@ -26,11 +28,19 @@ public interface Logger {
     void print(String text);
 
     /**
-     * Prints integers array
-     * @param numbers integers array
+     * Prints file with integers array
+     * @param text text string
+     * @param file file with integers arrray
+     * @param size size of input array
      */
     void print(String text, File file, int size);
 
+    /**
+     * Prints list with integers
+     * @param text text string
+     * @param list list of integers
+     * @param size size of input array
+     */
     void print(String text, List<Integer> list, int size);
 
     /**

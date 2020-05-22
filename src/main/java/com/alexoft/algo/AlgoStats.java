@@ -10,7 +10,7 @@ public class AlgoStats {
     private int splits; // number of array splits
     private int merges; // number of array merges
     private int copies; // number of array copying
-    private long timeNanoSeconds;
+    private long timeNanoSeconds; // time of algorithm work in nanoseconds
 
     public AlgoStats(String algoName) {
         this.algoName = algoName;
@@ -60,6 +60,11 @@ public class AlgoStats {
         this.timeNanoSeconds = timeNanoSeconds;
     }
 
+    /**
+     * Counts complexity of external merge algorithm using formula:
+     * 2*N*(splits+merges)
+     * @return complexity number
+     */
     public long countComplexity() {
         return 2L*getArraySize()*(getMerges()+getSplits());
     }
