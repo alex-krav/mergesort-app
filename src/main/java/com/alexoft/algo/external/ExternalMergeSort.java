@@ -8,8 +8,8 @@ import java.io.File;
 public interface ExternalMergeSort {
 
     /**
-     * Sorts an array of integers
-     * @param A array of integers
+     * Sorts a file of integers
+     * @param file file with integers
      */
     void sort(File file);
 

@@ -15,16 +15,21 @@ public abstract class ExternalMergeSortBase implements ExternalMergeSort {
     protected Logger logger;
     // sorts in ascending order by default
     protected boolean asc = true;
-    // variables for limiting number of logged interim arrays
+    // number of logged interim arrays
     protected int displayedCounter;
 
+    /**
+     * Clears counter before every sort
+     */
     protected void initInterimResultCounters() {
         displayedCounter = 0;
     }
 
     /**
      * Logs interim array
-     * @param array integers array
+     * @param message text
+     * @param array file with integers
+     * @param size size of array in file
      */
     protected void logInterim(String message, File array, int size) {
         if (null != logger) {
@@ -33,6 +38,12 @@ public abstract class ExternalMergeSortBase implements ExternalMergeSort {
         }
     }
 
+    /**
+     * Logs interim array
+     * @param message text
+     * @param list list of integers
+     * @param size overall size of input array
+     */
     protected void logInterim(String message, List<Integer> list, int size) {
         if (null != logger) {
             ++displayedCounter;
@@ -50,7 +61,7 @@ public abstract class ExternalMergeSortBase implements ExternalMergeSort {
 
     /**
      * Setter for logger
-     * @param logger LoggingService
+     * @param logger logger object
      */
     public void setLogger(Logger logger) {
         this.logger = logger;
@@ -82,15 +93,19 @@ public abstract class ExternalMergeSortBase implements ExternalMergeSort {
     }
 
     /**
-     * Logs a message and array
+     * Logs a message file of integers
      * @param message message string
-     * @param numbers integer array
+     * @param numbers file with integers array
      */
     public void log(String message, File numbers) {
         if (null != logger)
             logger.print(message, numbers);
     }
 
+    /**
+     * Gets sorting order
+     * @return string representation of sorting order
+     */
     protected String getAscString() {
         return isAscending() ? "(ascending order)" : "(descending order)";
     }

@@ -7,7 +7,13 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
+/**
+ * Implementation of external merge sort.
+ * Uses two working files, together with input file - three:
+ * one for input, two for output.
+ */
 public class DirectMergeSort extends ExternalMergeSortBase {
+    // comparator object for priority queue
     private Comparator<HeapNode> comparator;
 
     @Override
@@ -27,6 +33,10 @@ public class DirectMergeSort extends ExternalMergeSortBase {
         algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
     }
 
+    /**
+     * Main method with split-merge cycle
+     * @param input file with integers
+     */
     private void directSort(File input) {
         int size = 0;
         // create two working files
@@ -76,6 +86,14 @@ public class DirectMergeSort extends ExternalMergeSortBase {
         }
     }
 
+    /**
+     * Interim merge method. Merges arrays of integers from two working files to third file.
+     * @param aFile file to be written to
+     * @param bFile first input file
+     * @param cFile second input file
+     * @param width number of integers on each working file for one merge iteration
+     * @param size size of input array
+     */
     private void fileMerge(File aFile, File bFile, File cFile, int width, int size) {
         try(DataOutputStream aOut = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(aFile)));
             DataInputStream bIn = new DataInputStream(new BufferedInputStream(new FileInputStream(bFile)));
@@ -86,25 +104,27 @@ public class DirectMergeSort extends ExternalMergeSortBase {
             int[] inI = {0, 0};
             PriorityQueue<HeapNode> pq = new PriorityQueue<>(2, comparator);
 
+            // until all numbers from input files are read
             while (i < size) {
-                try {
+                try { // init priority queue with value from first input file
                     pq.add(new HeapNode(in[0].readInt(), 0)); ++i; ++inI[0];
                 } catch (IOException e) {
                     inI[0] = width;
                 }
                 if (i < size)
-                    try {
+                    try { // init priority queue with value from second input file
                         pq.add(new HeapNode(in[1].readInt(), 1)); ++i; ++inI[1];
                     } catch (IOException e) {
                         inI[1] = width;
                     }
 
                 while (!pq.isEmpty()) {
+                    // get min/max number depending on sorting order
                     HeapNode root = pq.remove();
                     aOut.writeInt(root.val);
 
                     if (i < size && inI[root.id] < width) {
-                        try {
+                        try { // get number from same input stream as previous number
                             pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i; ++inI[root.id];
                         } catch (IOException e) {
                             inI[root.id] = width;
@@ -120,6 +140,14 @@ public class DirectMergeSort extends ExternalMergeSortBase {
         }
     }
 
+    /**
+     * Final merge method to output file.
+     * @param aFile file to be written to
+     * @param bFile first input file
+     * @param cFile second input file
+     * @param width number of integers on each working file for one merge iteration
+     * @param size size of input array
+     */
     private void fileMergeOutput(File aFile, File bFile, File cFile, int width, int size) {
         try(BufferedWriter aOut = new BufferedWriter(new FileWriter(aFile));
         DataInputStream bIn = new DataInputStream(new BufferedInputStream(new FileInputStream(bFile)));
@@ -130,26 +158,27 @@ public class DirectMergeSort extends ExternalMergeSortBase {
             int[] inI = {0, 0};
             PriorityQueue<HeapNode> pq = new PriorityQueue<>(2, comparator);
 
-            aOut.write(size + "\n");
+            aOut.write(size + "\n"); // write input array size
             while (i < size) {
-                try {
+                try { // init priority queue with value from first input file
                     pq.add(new HeapNode(in[0].readInt(), 0)); ++i; ++inI[0];
                 } catch (IOException e) {
                     inI[0] = width;
                 }
                 if (i < size)
-                    try {
+                    try { // init priority queue with value from second input file
                         pq.add(new HeapNode(in[1].readInt(), 1)); ++i; ++inI[1];
                     } catch (IOException e) {
                         inI[1] = width;
                     }
 
                 while (!pq.isEmpty()) {
+                    // get min/max number depending on sorting order
                     HeapNode root = pq.remove();
                     aOut.write(root.val + " ");
 
                     if (i < size && inI[root.id] < width) {
-                        try {
+                        try { // get number from same input stream as previous number
                             pq.add(new HeapNode(in[root.id].readInt(), root.id)); ++i; ++inI[root.id];
                         } catch (IOException e) {
                             inI[root.id] = width;
@@ -165,6 +194,14 @@ public class DirectMergeSort extends ExternalMergeSortBase {
         }
     }
 
+    /**
+     * Split method. Splits input file to two working files.
+     * @param aFile input file
+     * @param bFile first output working file
+     * @param cFile second output working file
+     * @param width number of integers for each working file for one split iteration
+     * @param size size of input array
+     */
     private void fileSplit(File aFile, File bFile, File cFile, int width, int size) {
         try(DataInputStream aIn = new DataInputStream(new BufferedInputStream(new FileInputStream(aFile)));
             DataOutputStream bOut = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(bFile)));
@@ -172,11 +209,13 @@ public class DirectMergeSort extends ExternalMergeSortBase {
 
             int i = 0;
             while (i < size) {
+                // write 'width' elements to first working file
                 for (int j = 0; j < width; ++j) {
                     bOut.writeInt(aIn.readInt()); ++i;
                     if (i == size) break;
                 }
                 if (i == size) break;
+                // write 'width' elements to second working file
                 for (int j = 0; j < width; ++j) {
                     cOut.writeInt(aIn.readInt()); ++i;
                     if (i == size) break;
@@ -184,6 +223,7 @@ public class DirectMergeSort extends ExternalMergeSortBase {
             }
             bOut.flush(); cOut.flush();
             algoStats.addSplits();
+            // log interim result
             logInterim("Direct merge sort interim result", aFile, size);
 
         } catch(IOException e) {
