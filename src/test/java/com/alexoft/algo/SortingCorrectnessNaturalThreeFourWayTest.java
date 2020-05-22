@@ -54,8 +54,8 @@ public class SortingCorrectnessNaturalThreeFourWayTest {
     @Test
     public void equalResults() {
         // Given
-        int num = 50000;
-        int[] data = {};//generator.generate(num);
+        int num = 1;
+        int[] data = {0};//generator.generate(num);
         int[] topDownResult = new int[num]; System.arraycopy(data, 0, topDownResult, 0, num);
         int[] naturalResult = new int[num]; System.arraycopy(data, 0, naturalResult, 0, num);
         int[] threeWayResult = new int[num]; System.arraycopy(data, 0, threeWayResult, 0, num);

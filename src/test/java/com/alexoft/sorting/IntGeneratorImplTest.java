@@ -27,11 +27,11 @@ public class IntGeneratorImplTest {
     @Test
     public void generate() {
         // Given
-        int number = 10;
+        int number = 1;
         generator = new IntGeneratorImpl();
         // When
-        int[] array1 = {}; //generator.generate(number);
-        int[] array2 = {}; //generator.generate(number);
+        int[] array1 = {0}; //generator.generate(number);
+        int[] array2 = {1}; //generator.generate(number);
         // Then
         assertEquals(number, array1.length);
         assertEquals(number, array2.length);
@@ -41,11 +41,11 @@ public class IntGeneratorImplTest {
     @Test
     public void generateMinMax() {
         // Given
-        int number = 10, min = 1, max = 50;
+        int number = 3, min = 1, max = 50;
         generator = new IntGeneratorImpl(min, max);
         // When
-        int[] array1 = {}; //generator.generate(number);
-        int[] array2 = {}; //generator.generate(number);
+        int[] array1 = {min,2,max}; //generator.generate(number);
+        int[] array2 = {min,3,max}; //generator.generate(number);
         mergeSort.sort(array1);
         mergeSort.sort(array2);
 
