@@ -2,7 +2,7 @@
 ## Idea
 
 This is a demo application that allows to test 3 implementations of external merge sort:
-- direct merge sort
+- straight merge sort
 - natural merge sort
 - balanced 2-way merge sort<p>
 

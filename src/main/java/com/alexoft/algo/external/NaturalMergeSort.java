@@ -9,7 +9,7 @@ import java.util.*;
  * Implementation of external merge sort.
  * Uses three working files, together with input file - four:
  * one for input, two for split/merge, one for output.
- * A natural merge sort is similar to a direct merge sort
+ * A natural merge sort is similar to a straight merge sort
  * except that any naturally occurring runs (sorted sequences)
  * in the input are exploited.
  */
@@ -30,7 +30,7 @@ public class NaturalMergeSort extends ExternalMergeSortBase {
                 : Comparator.<HeapNode>comparingInt(x -> x.val).reversed();
         algoStats = new AlgoStats("Natural merge sort");
         initInterimResultCounters();
-        naturalDirectSort(file);
+        naturalStraightSort(file);
         log("Natural merge sort output", file);
         algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
     }
@@ -39,7 +39,7 @@ public class NaturalMergeSort extends ExternalMergeSortBase {
      * Common method with sort cycle and create/delete files operations.
      * @param aTmp file with integers
      */
-    private void naturalDirectSort(File aTmp) {
+    private void naturalStraightSort(File aTmp) {
         // create three working files
         File bTmp = new File("b.tmp");
         File cTmp = new File("c.tmp");

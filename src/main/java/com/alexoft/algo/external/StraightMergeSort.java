@@ -12,7 +12,7 @@ import java.util.Scanner;
  * Uses two working files, together with input file - three:
  * one for input, two for output.
  */
-public class DirectMergeSort extends ExternalMergeSortBase {
+public class StraightMergeSort extends ExternalMergeSortBase {
     // comparator object for priority queue
     private Comparator<HeapNode> comparator;
 
@@ -23,13 +23,13 @@ public class DirectMergeSort extends ExternalMergeSortBase {
         }
 
         long startTime = System.nanoTime();
-        log(String.format("Direct merge sort is starting %s...", getAscString()));
+        log(String.format("Straight merge sort is starting %s...", getAscString()));
         comparator = (isAscending())
                 ? Comparator.comparingInt(x -> x.val)
                 : Comparator.<HeapNode>comparingInt(x -> x.val).reversed();
-        algoStats = new AlgoStats("Direct merge sort");
-        directSort(file);
-        log("Direct merge sort output", file);
+        algoStats = new AlgoStats("Straight merge sort");
+        straightSort(file);
+        log("Straight merge sort output", file);
         algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);
     }
 
@@ -37,7 +37,7 @@ public class DirectMergeSort extends ExternalMergeSortBase {
      * Main method with split-merge cycle
      * @param input file with integers
      */
-    private void directSort(File input) {
+    private void straightSort(File input) {
         int size = 0;
         // create two working files
         File bTmp = new File("b.tmp");
@@ -224,7 +224,7 @@ public class DirectMergeSort extends ExternalMergeSortBase {
             bOut.flush(); cOut.flush();
             algoStats.addSplits();
             // log interim result
-            logInterim("Direct merge sort interim result", aFile, size);
+            logInterim("Straight merge sort interim result", aFile, size);
 
         } catch(IOException e) {
             e.printStackTrace();
