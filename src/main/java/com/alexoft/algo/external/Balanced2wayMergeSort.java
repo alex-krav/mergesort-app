@@ -26,7 +26,7 @@ public class Balanced2wayMergeSort extends ExternalMergeSortBase {
         comparator = (isAscending())
                 ? Comparator.comparingInt(x -> x.val)
                 : Comparator.<HeapNode>comparingInt(x -> x.val).reversed();
-        algoStats = new AlgoStats("Balanced 2-way merge sort");
+        algoStats = new AlgoStats("Balanced 2-way merge sort " + getAscString());
         balanced2waySort(file);
         log("Balanced 2-way merge sort output", file);
         algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);

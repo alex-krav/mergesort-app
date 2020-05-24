@@ -27,7 +27,7 @@ public class StraightMergeSort extends ExternalMergeSortBase {
         comparator = (isAscending())
                 ? Comparator.comparingInt(x -> x.val)
                 : Comparator.<HeapNode>comparingInt(x -> x.val).reversed();
-        algoStats = new AlgoStats("Straight merge sort");
+        algoStats = new AlgoStats("Straight merge sort " + getAscString());
         straightSort(file);
         log("Straight merge sort output", file);
         algoStats.setTimeNanoSeconds(System.nanoTime() - startTime);

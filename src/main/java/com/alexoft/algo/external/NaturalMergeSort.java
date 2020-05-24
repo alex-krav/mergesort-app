@@ -28,7 +28,7 @@ public class NaturalMergeSort extends ExternalMergeSortBase {
         comparator = (isAscending())
                 ? Comparator.comparingInt(x -> x.val)
                 : Comparator.<HeapNode>comparingInt(x -> x.val).reversed();
-        algoStats = new AlgoStats("Natural merge sort");
+        algoStats = new AlgoStats("Natural merge sort " + getAscString());
         initInterimResultCounters();
         naturalStraightSort(file);
         log("Natural merge sort output", file);
